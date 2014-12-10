@@ -15,7 +15,7 @@ add_library(YDictbackend MODULE
 set_target_properties(YDictbackend PROPERTIES
          LIBRARY_OUTPUT_DIRECTORY YDict)
 
-qt5_use_modules(YDictbackend Gui Qml Quick)
+qt5_use_modules(YDictbackend Gui Qml Quick Core Widgets)
 
 # Copy qmldir file to build dir for running in QtCreator
 add_custom_target(YDictbackend-qmldir ALL

@@ -7,7 +7,8 @@
 #include <QJsonDocument>
 #include <QJsonParseError>
 #include <QJsonArray>
-
+#include <QClipboard>
+#include <QApplication>
 
 YouDaoQuery::YouDaoQuery(QObject * parent):
 QObject(parent)
@@ -15,6 +16,10 @@ QObject(parent)
 	mNetworkManager = new QNetworkAccessManager(this);
 	QObject::connect(mNetworkManager, SIGNAL(finished(QNetworkReply *)),
 					 this, SLOT(finishedSlot(QNetworkReply *)));
+
+    QClipboard *board = QApplication::clipboard();
+    board->selectionChanged();
+    connect(board,SIGNAL(selectionChanged()),this,SLOT(selectionChanged()));
 }
 
 void YouDaoQuery::finishedSlot(QNetworkReply * reply)
@@ -26,7 +31,7 @@ void YouDaoQuery::finishedSlot(QNetworkReply * reply)
 	// e.g. the HTTP status code
 	QVariant statusCodeV =
 		reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
-	// Or the target URL if it was a redirect:
+    // Or the target URL if it wstras a redirect:
 	QVariant redirectionTargetUrl =
 		reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
 	// see CS001432 on how to handle this
@@ -35,7 +40,7 @@ void YouDaoQuery::finishedSlot(QNetworkReply * reply)
 	if (reply->error() == QNetworkReply::NoError) {
 		// read data from QNetworkReply here
 
-		// Example 1: Creating QImage from the reply
+        // Example 1: Creating QImage from the reply
 //        QImageReader imageReader(reply);
 //        QImage pic = imageReader.read();
 
@@ -169,4 +174,16 @@ QString YouDaoQuery::explains() const
 QString YouDaoQuery::webs() const
 {
 	return "mWebs";
+}
+
+void YouDaoQuery::selectionChanged()
+{
+    static QString last;
+    QString data = QApplication::clipboard()->text(QClipboard::Selection);
+
+    if(data.length()==0||last==data){
+        return;
+    }
+    last=data;
+    setQuery(last);
 }

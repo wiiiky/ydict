@@ -6,6 +6,8 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QQmlListProperty>
+#include <QTimer>
+
 
 /*
  {
@@ -35,62 +37,67 @@
 */
 
 class WebTranslation:public QObject {
-  Q_OBJECT public:
-	explicit WebTranslation(QString _key, QList < QString > _value) {
-		key = _key;
-		value = _value;
-	} QString key;
-	QList < QString > value;
+    Q_OBJECT public:
+    explicit WebTranslation(QString _key, QList < QString > _value) {
+        key = _key;
+        value = _value;
+    } QString key;
+    QList < QString > value;
 };
 
 class YouDaoQuery:public QObject {
-	Q_OBJECT Q_PROPERTY(QString query READ query WRITE setQuery)
-	Q_PROPERTY(qint32 errorCode READ errorCode)
-	Q_PROPERTY(QString translation READ translation)
-	Q_PROPERTY(QString phonetic READ phonetic)
-	Q_PROPERTY(QString ukPhonetic READ ukPhonetic)
-	Q_PROPERTY(QString usPhonetic READ usPhonetic)
-	Q_PROPERTY(QString explains READ explains)
-	Q_PROPERTY(QString webs READ webs)
+    Q_OBJECT
 
-	Q_PROPERTY(NOTIFY error)
-	Q_PROPERTY(NOTIFY result)
-  public:
-	explicit YouDaoQuery(QObject * parent = 0);
-	~YouDaoQuery();
+    Q_PROPERTY(QString query READ query WRITE setQuery)
+    Q_PROPERTY(qint32 errorCode READ errorCode)
+    Q_PROPERTY(QString translation READ translation)
+    Q_PROPERTY(QString phonetic READ phonetic)
+    Q_PROPERTY(QString ukPhonetic READ ukPhonetic)
+    Q_PROPERTY(QString usPhonetic READ usPhonetic)
+    Q_PROPERTY(QString explains READ explains)
+    Q_PROPERTY(QString webs READ webs)
 
-	Q_SIGNALS:void error();
-	void result();
+    Q_PROPERTY(NOTIFY error)
+    Q_PROPERTY(NOTIFY result)
+public:
+    explicit YouDaoQuery(QObject * parent = 0);
+    ~YouDaoQuery();
 
-	private Q_SLOTS: void finishedSlot(QNetworkReply * reply);
+Q_SIGNALS:
+    void error();
+    void result();
 
-  protected:
-	void setQuery(QString words);
-	QString query() const;
-	qint32 errorCode() const;
-	QString translation() const;
-	QString phonetic() const;
-	QString ukPhonetic() const;
-	QString usPhonetic() const;
-	QString explains() const;
-	QString webs() const;
+private Q_SLOTS:
+    void finishedSlot(QNetworkReply * reply);
+    void forClipboard();
+    void selectionChanged();
 
-  protected:
-	 qint32 mErrorCode;
-	QString mQuery;
-	 QList < QString > mTranslation;
-	/* basic */
-	QString mPhonetic;
-	QString mUkPhonetic;
-	QString mUsPhonetic;
-	 QList < QString > mExplains;
-	/* web */
-	 QList < WebTranslation * >mWebs;
+protected:
+    void setQuery(QString words);
+    QString query() const;
+    qint32 errorCode() const;
+    QString translation() const;
+    QString phonetic() const;
+    QString ukPhonetic() const;
+    QString usPhonetic() const;
+    QString explains() const;
+    QString webs() const;
 
-  private:
-	 QNetworkAccessManager * mNetworkManager;
-	QNetworkReply *mReply;
+protected:
+    qint32 mErrorCode;
+    QString mQuery;
+    QList < QString > mTranslation;
+    /* basic */
+    QString mPhonetic;
+    QString mUkPhonetic;
+    QString mUsPhonetic;
+    QList < QString > mExplains;
+    /* web */
+    QList < WebTranslation * >mWebs;
 
+private:
+    QNetworkAccessManager * mNetworkManager;
+    QNetworkReply *mReply;
 };
 
 #endif							// YOUDAOQUERY_H

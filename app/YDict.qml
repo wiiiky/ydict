@@ -34,6 +34,7 @@ MainView {
 
     YouDaoQuery{    /* 没有界面元素 */
         id:yd_query
+
         onResult: {
             console.debug('result',translation)
             row_basic.translation=translation

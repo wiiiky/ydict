@@ -117,17 +117,17 @@ void YouDaoQuery::setQuery(QString words)
 	// By the QNetworkReply pointer you can identify request and response.
 }
 
-QString YouDaoQuery::query() const const
+QString YouDaoQuery::query() const
 {
 	return mQuery;
 }
 
-qint32 YouDaoQuery::errorCode() const const
+qint32 YouDaoQuery::errorCode() const
 {
 	return mErrorCode;
 }
 
-QString YouDaoQuery::translation() const const
+QString YouDaoQuery::translation() const
 {
 	QString str;
 	for (int i = 0; i < mTranslation.size(); i++) {
@@ -139,22 +139,22 @@ QString YouDaoQuery::translation() const const
 	return str;
 }
 
-QString YouDaoQuery::phonetic() const const
+QString YouDaoQuery::phonetic() const
 {
 	return mPhonetic;
 }
 
-QString YouDaoQuery::ukPhonetic() const const
+QString YouDaoQuery::ukPhonetic() const
 {
 	return mUkPhonetic;
 }
 
-QString YouDaoQuery::usPhonetic() const const
+QString YouDaoQuery::usPhonetic() const
 {
 	return mUsPhonetic;
 }
 
-QString YouDaoQuery::explains() const const
+QString YouDaoQuery::explains() const
 {
 	QString str;
 	for (int i = 0; i < mExplains.size(); i++) {
@@ -166,7 +166,7 @@ QString YouDaoQuery::explains() const const
 	return str;
 }
 
-QString YouDaoQuery::webs() const const
+QString YouDaoQuery::webs() const
 {
 	return "mWebs";
 }

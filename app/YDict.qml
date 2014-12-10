@@ -29,8 +29,8 @@ MainView {
     // Removes the old toolbar and enables new features of the new header.
     useDeprecatedToolbar: false
 
-    width: units.dp(480)
-    height: units.dp(300)
+    width: units.dp(400)
+    height: units.dp(240)
 
     YouDaoQuery{    /* 没有界面元素 */
         id:yd_query
@@ -46,8 +46,11 @@ MainView {
     Rectangle{
         id: content
 
+        anchors.fill: parent
+
         InputField{
             id : row_query
+            width:parent.width
             onQuery: {
                 console.debug("query:",queryText)
                 yd_query.query=queryText
@@ -56,6 +59,7 @@ MainView {
 
         BasicField{
             id : row_basic
+            width:parent.width
             anchors.left: row_query.left
             anchors.top: row_query.bottom
             anchors.topMargin: units.dp(35)

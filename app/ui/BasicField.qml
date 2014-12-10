@@ -22,7 +22,8 @@ Row{
         id: shape
         radius : "large"
 
-        width:units.dp(250)
+//        width:units.dp(250)
+        width:parent.width*0.5
 
         OrangeLabel{
             id: tf_result
@@ -34,7 +35,6 @@ Row{
             anchors.rightMargin: units.dp(10)
             anchors.leftMargin: units.dp(10)
 
-            width:units.dp(200)
             wrapMode: Text.Wrap
 
             onHeightChanged: {

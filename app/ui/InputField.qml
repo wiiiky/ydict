@@ -24,14 +24,14 @@ Row{
 
     OrangeTextField{
         id:tf_query
-        width: main_window.width*2/3
+        width: parent.width*3/5
         placeholderText: i18n.tr("words to query")
         onAccepted: row_query.activate()
     }
 
     OrangeButton{
         id: btn_query
-        width: main_window.width*1/5
+        width: parent.width*1/5
         text: i18n.tr("Query")
         onClicked: row_query.activate()
     }

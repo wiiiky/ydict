@@ -1,0 +1,15 @@
+{
+    "architecture": "@CLICK_ARCH@",
+    "description": "YouDao Dict for ubuntu",
+    "framework": "ubuntu-sdk-14.10-dev2",
+    "hooks": {
+        "YDict": {
+            "apparmor": "YDict.apparmor",
+            "desktop": "YDict.desktop"
+        }
+    },
+    "maintainer": "Wiky L<wiiiky@yeah.net>",
+    "name": "wl.org.ydict",
+    "title": "YDict",
+    "version": "0.1"
+}

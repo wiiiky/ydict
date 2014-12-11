@@ -181,7 +181,7 @@ void YouDaoQuery::selectionChanged()
     static QString last;
     QString data = QApplication::clipboard()->text(QClipboard::Selection);
 
-    if(data.length()==0||last==data){
+    if(data.length()==0||last==data||data.indexOf('\n')>=0){
         return;
     }
     last=data;

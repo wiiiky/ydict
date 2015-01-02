@@ -30,7 +30,7 @@ MainView {
     useDeprecatedToolbar: false
 
     width: units.dp(400)
-    height: units.dp(240)
+    height: units.dp(150)
 
     YouDaoQuery{    /* 没有界面元素 */
         id:yd_query

@@ -2,7 +2,7 @@
 
 
 from gi.repository import Gtk
-from query import youdao_query
+from youdao_dict.query import youdao_query
 
 
 class MainWindow(Gtk.Window):

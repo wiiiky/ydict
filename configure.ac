@@ -9,6 +9,8 @@ AM_INIT_AUTOMAKE([1.11])
 
 AM_PATH_PYTHON([3])
 
+AC_PREFIX_DEFAULT(/usr)
+
 
 dnl ***************************************************************************
 dnl Internationalization

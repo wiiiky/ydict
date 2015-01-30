@@ -9,7 +9,9 @@ youdao_dictdir = $(pythondir)/youdao_dict
 
 youdao_dict_PYTHON = \
 	mainwindow.py \
+	aboutdialog.py \
 	query.py \
+	local.py \
 	__init__.py
 
 

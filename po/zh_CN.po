@@ -1,0 +1,55 @@
+# Chinese translations for ydict package
+# ydict 软件包的简体中文翻译.
+# Copyright (C) 2015 THE ydict'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the ydict package.
+# Wiky L <wiiiky@outlook.com>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ydict 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-01-30 11:42+0800\n"
+"PO-Revision-Date: 2015-01-30 11:26+0800\n"
+"Last-Translator: Wiky L <wiiiky@outlook.com>\n"
+"Language-Team: Chinese (simplified) <translation-team-zh-cn@lists."
+"sourceforge.net>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=GB2312\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/youdao_dict/mainwindow.py:40
+msgid "Y"
+msgstr "Y"
+
+#: ../src/youdao_dict/mainwindow.py:61
+msgid "_About"
+msgstr "关于"
+
+#: ../src/youdao_dict/mainwindow.py:67
+msgid "About"
+msgstr "关于"
+
+#: ../src/youdao_dict/mainwindow.py:93
+msgid "Query"
+msgstr "查询"
+
+#: ../src/youdao_dict/mainwindow.py:105
+msgid "Basic"
+msgstr "基本释义"
+
+#: ../src/youdao_dict/mainwindow.py:118
+msgid "Web"
+msgstr "网络解释"
+
+#: ../src/youdao_dict/aboutdialog.py:30
+msgid "About YDict"
+msgstr "关于Y词典"
+
+#: ../src/youdao_dict/aboutdialog.py:32
+msgid "ydict"
+msgstr "Y词典"
+
+#: ../src/youdao_dict/aboutdialog.py:41
+msgid "translator-credits"
+msgstr "Wiky L"

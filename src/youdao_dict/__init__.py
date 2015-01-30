@@ -1,3 +1,3 @@
 #
 
-__all__ = ['mainwindow','query']
+__all__ = ['mainwindow']

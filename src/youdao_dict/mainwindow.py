@@ -1,8 +1,30 @@
 #coding=utf8
 
+#
+# mainwindow.py
+#
+# Copyright (C) 2015 - Wiky L <wiiiky@outlook.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
 
 from gi.repository import Gtk
 from youdao_dict.query import youdao_query
+from youdao_dict.local import _
+from youdao_dict.aboutdialog import AboutDialog
+
 
 
 class MainWindow(Gtk.Window):
@@ -13,7 +35,9 @@ class MainWindow(Gtk.Window):
     """The Main Window of YouDao Dict"""
 
     def __init__(self, width=DEFAULT_WIDTH, height=DEFAULT_HEIGHT):
-        super().__init__()
+        super(MainWindow, self).__init__()
+
+        self.set_title(_("Y"))
         self.set_default_size(width, height)
         self.set_position(Gtk.WindowPosition.CENTER)
         self.connect("delete-event",Gtk.main_quit)
@@ -34,13 +58,14 @@ class MainWindow(Gtk.Window):
     def create_menu_bar(self):
         menubar = Gtk.MenuBar()
 
-        _about=Gtk.MenuItem.new_with_mnemonic("_About")
+        _about=Gtk.MenuItem.new_with_mnemonic(_("_About"))
         menubar.append(_about)
 
         about_menu = Gtk.Menu()
         _about.set_submenu(about_menu)
 
-        about = Gtk.MenuItem("About")
+        about = Gtk.MenuItem(_("About"))
+        about.connect("activate",self.on_about_item)
         about_menu.append(about)
 
         return menubar
@@ -65,7 +90,7 @@ class MainWindow(Gtk.Window):
         self.spinner.start()
         hbox.pack_start(self.spinner,False,False,0)
 
-        self.query = Gtk.Button.new_with_label("Query")
+        self.query = Gtk.Button.new_with_label(_("Query"))
         self.query.set_name("query_button")
         self.query.connect("clicked",self.on_query)
         hbox.pack_start(self.query,False,False,0)
@@ -77,7 +102,7 @@ class MainWindow(Gtk.Window):
 
         # basic
         self.basic_expander = Gtk.Expander.new("")
-        label = Gtk.Label.new("Basic")
+        label = Gtk.Label.new(_("Basic"))
         label.set_name("basic_expander_label")
         self.basic_expander.set_label_widget(label)
         vbox.pack_start(self.basic_expander,False,True,0)
@@ -90,7 +115,7 @@ class MainWindow(Gtk.Window):
 
         # web
         self.web_expander = Gtk.Expander.new("")
-        label = Gtk.Label.new("Web")
+        label = Gtk.Label.new(_("Web"))
         label.set_name("web_expander_label")
         self.web_expander.set_label_widget(label)
         vbox.pack_start(self.web_expander,False,True,0)
@@ -103,13 +128,16 @@ class MainWindow(Gtk.Window):
 
         return vbox
 
+    def on_about_item(self,item):
+        AboutDialog(self).show()
 
-    def on_activate(self,data):
+
+    def on_activate(self,entry):
         self.query.clicked()
         self.query.grab_focus()
 
 
-    def on_query(self,data):
+    def on_query(self,button):
         text = self.entry.get_text()
         if not text:
             return

@@ -1,3 +1,4 @@
 # List of source files containing translatable strings.
 
-src/main.py
+src/youdao_dict/mainwindow.py
+src/youdao_dict/aboutdialog.py

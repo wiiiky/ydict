@@ -582,6 +582,7 @@ PACKAGE_STRING='ydict 0.1'
 PACKAGE_BUGREPORT=''
 PACKAGE_URL=''
 
+ac_default_prefix=/usr
 # Factoring default headers for most tests.
 ac_includes_default="\
 #include <stdio.h>
@@ -3064,6 +3065,8 @@ $as_echo "$am_cv_python_pyexecdir" >&6; }
 
 
   fi
+
+
 
 
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ydict 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-30 11:25+0800\n"
+"POT-Creation-Date: 2015-01-31 12:25+0800\n"
 "PO-Revision-Date: 2015-01-30 11:25+0800\n"
 "Last-Translator: Wiky L <wiiiky@outlook.com>\n"
 "Language-Team: English\n"
@@ -17,19 +17,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../src/youdao_dict/mainwindow.py:60
+#: ../src/youdao_dict/mainwindow.py:40
+msgid "Y"
+msgstr "Y"
+
+#: ../src/youdao_dict/mainwindow.py:61
 msgid "_About"
 msgstr "_About"
 
-#: ../src/youdao_dict/mainwindow.py:66
+#: ../src/youdao_dict/mainwindow.py:67
 msgid "About"
 msgstr "About"
 
-#: ../src/youdao_dict/mainwindow.py:104
+#: ../src/youdao_dict/mainwindow.py:93
+msgid "Query"
+msgstr "Query"
+
+#: ../src/youdao_dict/mainwindow.py:105
 msgid "Basic"
 msgstr "Basic"
 
-#: ../src/youdao_dict/mainwindow.py:117
+#: ../src/youdao_dict/mainwindow.py:118
 msgid "Web"
 msgstr "Web"
 

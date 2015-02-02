@@ -54,6 +54,10 @@ class MainWindow(Gtk.Window):
         self.show_all()
 
         self.spinner.hide()
+        self.basic_result.hide()
+        self.web_result.hide()
+
+        self.set_keep_above(True)
 
     def create_menu_bar(self):
         menubar = Gtk.MenuBar()

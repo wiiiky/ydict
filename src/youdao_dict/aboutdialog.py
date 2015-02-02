@@ -1,4 +1,4 @@
-#coding=utf8
+# coding=utf8
 
 #
 # aboutdialog.py
@@ -25,9 +25,12 @@ from youdao_dict.local import _
 
 
 class AboutDialog(Gtk.AboutDialog):
+
     """docstring for AboutDialog"""
-    def __init__(self,parent=None):
-        super(AboutDialog, self).__init__(parent=parent,title=_("About YDict"))
+
+    def __init__(self, parent=None):
+        super(AboutDialog, self).__init__(
+            parent=parent, title=_("About YDict"))
 
         self.set_program_name(_("ydict"))
         self.set_version("0.1")
@@ -39,4 +42,3 @@ class AboutDialog(Gtk.AboutDialog):
         self.set_wrap_license(True)
         self.set_website("https://github.com/wiiiky/ydict")
         self.set_translator_credits(_("translator-credits"))
-

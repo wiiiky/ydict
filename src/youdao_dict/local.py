@@ -1,4 +1,4 @@
-#coding=utf8
+# coding=utf8
 
 #
 # locale.py
@@ -22,5 +22,5 @@
 
 import gettext
 
-_T = gettext.translation("ydict",fallback=True)
+_T = gettext.translation("ydict", fallback=True)
 _ = _T.gettext

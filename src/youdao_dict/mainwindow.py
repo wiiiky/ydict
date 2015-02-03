@@ -174,6 +174,7 @@ class MainWindow(Gtk.Window):
         self.entry.grab_focus()
         self.entry.select_region(0, -1)
         self.spinner.hide()
+        self.resize(1,1)
 
     def on_error(self, text, e):
         self.spinner.hide()

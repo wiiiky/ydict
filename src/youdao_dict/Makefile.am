@@ -11,7 +11,8 @@ youdao_dict_PYTHON = \
 	mainwindow.py \
 	aboutdialog.py \
 	query.py \
-	local.py \
+	i18n.py \
+	history.py \
 	__init__.py
 
 

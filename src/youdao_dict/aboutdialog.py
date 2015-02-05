@@ -21,7 +21,7 @@
 
 
 from gi.repository import Gtk
-from youdao_dict.local import _
+from youdao_dict.i18n import _
 
 
 class AboutDialog(Gtk.AboutDialog):

@@ -22,8 +22,9 @@
 
 from gi.repository import Gtk
 from youdao_dict.query import youdao_query
-from youdao_dict.local import _
+from youdao_dict.i18n import _
 from youdao_dict.aboutdialog import AboutDialog
+from youdao_dict.history import record
 
 
 class MainWindow(Gtk.Window):
@@ -154,6 +155,7 @@ class MainWindow(Gtk.Window):
             self.basic_result.set_text(basic_result)
             self.basic_expander.set_expanded(True)
             self.basic_result.show()
+            record(text, basic_result)
         else:
             self.basic_result.set_text("")
             self.basic_result.hide()
@@ -174,7 +176,7 @@ class MainWindow(Gtk.Window):
         self.entry.grab_focus()
         self.entry.select_region(0, -1)
         self.spinner.hide()
-        self.resize(1,1)
+        self.resize(1, 1)
 
     def on_error(self, text, e):
         self.spinner.hide()

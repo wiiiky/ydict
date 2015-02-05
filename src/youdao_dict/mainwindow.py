@@ -61,12 +61,17 @@ class MainWindow(Gtk.Window):
     def create_menu_bar(self):
         menubar = Gtk.MenuBar()
 
+        setting = Gtk.MenuItem.new_with_mnemonic(_("_Setting"))
+        menubar.append(setting)
+        setting_menu = Gtk.Menu()
+        setting.set_submenu(setting_menu)
+        hyper_setting = Gtk.CheckMenuItem.new_with_mnemonic(_("_Hyper"))
+        setting_menu.append(hyper_setting)
+
         _about = Gtk.MenuItem.new_with_mnemonic(_("_About"))
         menubar.append(_about)
-
         about_menu = Gtk.Menu()
         _about.set_submenu(about_menu)
-
         about = Gtk.MenuItem(_("About"))
         about.connect("activate", self.on_about_item)
         about_menu.append(about)

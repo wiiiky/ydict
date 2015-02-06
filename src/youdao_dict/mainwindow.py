@@ -97,6 +97,7 @@ class MainWindow(Gtk.Window):
         self.entry.connect("activate", self.on_activate)
         hbox.pack_start(self.entry, True, True, 0)
 
+        # sets GtkEntryCompletion
         self.completion = Gtk.EntryCompletion.new()
         self.completion.set_text_column(0)
         self.history = get_history()
@@ -182,8 +183,10 @@ class MainWindow(Gtk.Window):
         if text != self.querying:
             return
 
-        basic_result = ""
         if "basic" in data:     # replace in operator with has_key in python3
+            basic_result = ""
+            if "phonetic" in data["basic"]:
+                basic_result += "[ " + data["basic"]["phonetic"] + " ]\n"
             for basic in data["basic"]["explains"]:
                 basic_result += basic + "\n"
             self.basic_result.set_text(basic_result)

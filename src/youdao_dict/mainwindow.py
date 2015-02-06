@@ -25,6 +25,7 @@ from youdao_dict.query import youdao_query
 from youdao_dict.i18n import _
 from youdao_dict.aboutdialog import AboutDialog
 from youdao_dict.history import record
+from youdao_dict.clipboard import start_listen, stop_listen
 
 
 class MainWindow(Gtk.Window):
@@ -65,7 +66,9 @@ class MainWindow(Gtk.Window):
         menubar.append(setting)
         setting_menu = Gtk.Menu()
         setting.set_submenu(setting_menu)
-        hyper_setting = Gtk.CheckMenuItem.new_with_mnemonic(_("_Hyper"))
+        hyper_setting = Gtk.CheckMenuItem.new_with_mnemonic(
+            _("_Hyper Translate"))
+        hyper_setting.connect("toggled", self.on_hyper_toggled)
         setting_menu.append(hyper_setting)
 
         _about = Gtk.MenuItem.new_with_mnemonic(_("_About"))
@@ -99,7 +102,7 @@ class MainWindow(Gtk.Window):
 
         self.query = Gtk.Button.new_with_label(_("Query"))
         self.query.set_name("query_button")
-        self.query.connect("clicked", self.on_query)
+        self.query.connect("clicked", self.on_query_button)
         hbox.pack_start(self.query, False, False, 0)
         return hbox
 
@@ -134,6 +137,17 @@ class MainWindow(Gtk.Window):
 
         return vbox
 
+    def on_hyper_toggled(self, item):
+        if item.get_active():
+            start_listen(self.on_clipboard_text)
+        else:
+            stop_listen()
+
+    def on_clipboard_text(self, text):
+        if not text:
+            return
+        self.start_query(text)
+
     def on_about_item(self, item):
         AboutDialog(self).show()
 
@@ -141,12 +155,16 @@ class MainWindow(Gtk.Window):
         self.query.clicked()
         self.query.grab_focus()
 
-    def on_query(self, button):
+    def on_query_button(self, button):
         text = self.entry.get_text()
         if not text:
             return
+        self.start_query(text)
+
+    def start_query(self, text):
         self.querying = text
         self.spinner.show()
+        self.entry.set_text(text)
         youdao_query(text, self.on_success, self.on_error, self)
 
     def on_success(self, text, data):

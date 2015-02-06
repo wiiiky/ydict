@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ydict 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-31 12:25+0800\n"
+"POT-Creation-Date: 2015-02-06 10:02+0800\n"
 "PO-Revision-Date: 2015-01-30 11:26+0800\n"
 "Last-Translator: Wiky L <wiiiky@outlook.com>\n"
 "Language-Team: Chinese (simplified) <translation-team-zh-cn@lists."
@@ -18,38 +18,46 @@ msgstr ""
 "Content-Type: text/plain; charset=GB2312\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/youdao_dict/mainwindow.py:40
+#: ../src/youdao_dict/mainwindow.py:41
 msgid "Y"
 msgstr "Y"
 
-#: ../src/youdao_dict/mainwindow.py:61
+#: ../src/youdao_dict/mainwindow.py:65
+msgid "_Setting"
+msgstr "设置"
+
+#: ../src/youdao_dict/mainwindow.py:70
+msgid "_Hyper Translate"
+msgstr "划词翻译"
+
+#: ../src/youdao_dict/mainwindow.py:74
 msgid "_About"
 msgstr "关于"
 
-#: ../src/youdao_dict/mainwindow.py:67
+#: ../src/youdao_dict/mainwindow.py:78
 msgid "About"
 msgstr "关于"
 
-#: ../src/youdao_dict/mainwindow.py:93
+#: ../src/youdao_dict/mainwindow.py:103
 msgid "Query"
 msgstr "查询"
 
-#: ../src/youdao_dict/mainwindow.py:105
+#: ../src/youdao_dict/mainwindow.py:114
 msgid "Basic"
 msgstr "基本释义"
 
-#: ../src/youdao_dict/mainwindow.py:118
+#: ../src/youdao_dict/mainwindow.py:127
 msgid "Web"
 msgstr "网络解释"
 
-#: ../src/youdao_dict/aboutdialog.py:30
+#: ../src/youdao_dict/aboutdialog.py:33
 msgid "About YDict"
 msgstr "关于Y词典"
 
-#: ../src/youdao_dict/aboutdialog.py:32
+#: ../src/youdao_dict/aboutdialog.py:35
 msgid "ydict"
 msgstr "Y词典"
 
-#: ../src/youdao_dict/aboutdialog.py:41
+#: ../src/youdao_dict/aboutdialog.py:44
 msgid "translator-credits"
 msgstr "Wiky L"

@@ -271,6 +271,7 @@ youdao_dict_PYTHON = \
 	query.py \
 	i18n.py \
 	history.py \
+	clipboard.py \
 	__init__.py
 
 all: all-am

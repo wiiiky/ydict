@@ -21,10 +21,11 @@
 
 
 from gi.repository import Gtk
+from gi.repository import GObject
 from youdao_dict.query import youdao_query
 from youdao_dict.i18n import _
 from youdao_dict.aboutdialog import AboutDialog
-from youdao_dict.history import record
+from youdao_dict.history import record, get_history
 from youdao_dict.clipboard import start_listen, stop_listen
 
 
@@ -95,6 +96,16 @@ class MainWindow(Gtk.Window):
         self.entry.set_name("query_entry")
         self.entry.connect("activate", self.on_activate)
         hbox.pack_start(self.entry, True, True, 0)
+
+        self.completion = Gtk.EntryCompletion.new()
+        self.completion.set_text_column(0)
+        self.history = get_history()
+        self.model = Gtk.ListStore.new([GObject.TYPE_STRING])
+        for text in self.history:
+            it = self.model.append()
+            self.model.set(it, [0], [text])
+        self.completion.set_model(self.model)
+        self.entry.set_completion(self.completion)
 
         self.spinner = Gtk.Spinner()
         self.spinner.start()
@@ -179,6 +190,9 @@ class MainWindow(Gtk.Window):
             self.basic_expander.set_expanded(True)
             self.basic_result.show()
             record(text, basic_result)
+            if text not in self.history:
+                it = self.model.prepend()
+                self.model.set(it, [0], [text])
         else:
             self.basic_result.set_text("")
             self.basic_result.hide()

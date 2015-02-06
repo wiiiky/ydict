@@ -64,3 +64,20 @@ def record(text, basic=''):
     cur.execute(statement, (text, basic, int(time.time())))
     gSQLite3Connection.commit()
     cur.close()
+
+
+def get_history(n=100):
+    try:
+        cur = gSQLite3Connection.cursor()
+        statement = 'select %s from %s group by text '\
+            'order by id desc limit %s' % (SQLITE3_COL_TEXT, SQLITE3_DB, n)
+        cur.execute(statement)
+        texts = cur.fetchall()
+        history = []
+        for text in texts:
+            history.append(text[0])
+        cur.close()
+        return history
+    except Exception as e:
+        print(e)
+        return []

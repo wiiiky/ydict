@@ -272,6 +272,7 @@ youdao_dict_PYTHON = \
 	i18n.py \
 	history.py \
 	clipboard.py \
+	config.py \
 	__init__.py
 
 all: all-am

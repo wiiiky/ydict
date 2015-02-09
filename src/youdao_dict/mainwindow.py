@@ -27,6 +27,7 @@ from youdao_dict.i18n import _
 from youdao_dict.aboutdialog import AboutDialog
 from youdao_dict.history import record, get_history, clear_all
 from youdao_dict.clipboard import start_listen, stop_listen
+from youdao_dict.config import gConfig
 
 
 class MainWindow(Gtk.Window):
@@ -69,6 +70,9 @@ class MainWindow(Gtk.Window):
         setting.set_submenu(setting_menu)
         hyper_setting = Gtk.CheckMenuItem.new_with_mnemonic(
             _("_Hyper Translate"))
+        if gConfig.is_hypertranslate():
+            hyper_setting.set_active(True)
+            self.on_hyper_toggled(hyper_setting)
         hyper_setting.connect("toggled", self.on_hyper_toggled)
         setting_menu.append(hyper_setting)
 
@@ -156,8 +160,10 @@ class MainWindow(Gtk.Window):
 
     def on_hyper_toggled(self, item):
         if item.get_active():
+            gConfig.set_hypertranslate(True)
             start_listen(self.on_clipboard_text)
         else:
+            gConfig.set_hypertranslate(False)
             stop_listen()
 
     def on_clear_history(self, item):

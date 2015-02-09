@@ -24,9 +24,8 @@ import os
 import sqlite3
 import time
 from gi.repository import GLib
+from youdao_dict.config import gConfigDir
 
-
-gConfigDir = GLib.get_user_config_dir() + "/youdao_dict"
 gSQLite3Path = gConfigDir + "/history.sqlite3"
 
 HISTORY_TABLE = 'query_history'

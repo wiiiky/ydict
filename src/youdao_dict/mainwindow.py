@@ -25,7 +25,7 @@ from gi.repository import GObject
 from youdao_dict.query import youdao_query
 from youdao_dict.i18n import _
 from youdao_dict.aboutdialog import AboutDialog
-from youdao_dict.history import record, get_history
+from youdao_dict.history import record, get_history, clear_all
 from youdao_dict.clipboard import start_listen, stop_listen
 
 
@@ -72,6 +72,10 @@ class MainWindow(Gtk.Window):
         hyper_setting.connect("toggled", self.on_hyper_toggled)
         setting_menu.append(hyper_setting)
 
+        clear_setting = Gtk.MenuItem.new_with_mnemonic(_("Clear History"))
+        clear_setting.connect("activate", self.on_clear_history)
+        setting_menu.append(clear_setting)
+
         _about = Gtk.MenuItem.new_with_mnemonic(_("_About"))
         menubar.append(_about)
         about_menu = Gtk.Menu()
@@ -108,6 +112,7 @@ class MainWindow(Gtk.Window):
         self.completion.set_model(self.model)
         self.entry.set_completion(self.completion)
 
+        # spinner
         self.spinner = Gtk.Spinner()
         self.spinner.start()
         hbox.pack_start(self.spinner, False, False, 0)
@@ -154,6 +159,11 @@ class MainWindow(Gtk.Window):
             start_listen(self.on_clipboard_text)
         else:
             stop_listen()
+
+    def on_clear_history(self, item):
+        clear_all()
+        self.history = []
+        self.model.clear()
 
     def on_clipboard_text(self, text):
         if not text:

@@ -29,10 +29,10 @@ from gi.repository import GLib
 gConfigDir = GLib.get_user_config_dir() + "/youdao_dict"
 gSQLite3Path = gConfigDir + "/history.sqlite3"
 
-SQLITE3_DB = 'query_history'
-SQLITE3_COL_TEXT = 'text'
-SQLITE3_COL_BASIC = 'basic'
-SQLITE3_COL_TIME = 'time'
+HISTORY_TABLE = 'query_history'
+HISTORY_COL_TEXT = 'text'
+HISTORY_COL_BASIC = 'basic'
+HISTORY_COL_TIME = 'time'
 
 try:
     os.mkdir(gConfigDir)
@@ -48,7 +48,7 @@ try:
                 '%s varchar(100) not null,'
                 '%s varchar(100) not null,'
                 '%s integer not null)'
-                % (SQLITE3_DB, SQLITE3_COL_TEXT, SQLITE3_COL_BASIC, SQLITE3_COL_TIME))
+                % (HISTORY_TABLE, HISTORY_COL_TEXT, HISTORY_COL_BASIC, HISTORY_COL_TIME))
     gSQLite3Connection.commit()
     cur.close()
 except sqlite3.OperationalError:
@@ -60,8 +60,18 @@ def record(text, basic=''):
 
     cur = gSQLite3Connection.cursor()
     statement = 'insert into %s(%s,%s,%s) values(?,?,?)'\
-        % (SQLITE3_DB, SQLITE3_COL_TEXT, SQLITE3_COL_BASIC, SQLITE3_COL_TIME)
+        % (HISTORY_TABLE, HISTORY_COL_TEXT, HISTORY_COL_BASIC, HISTORY_COL_TIME)
     cur.execute(statement, (text, basic, int(time.time())))
+    gSQLite3Connection.commit()
+    cur.close()
+
+
+def clear_all():
+    global gSQLite3Connection
+
+    cur = gSQLite3Connection.cursor()
+    statement = 'delete from %s' % HISTORY_TABLE
+    cur.execute(statement)
     gSQLite3Connection.commit()
     cur.close()
 
@@ -70,7 +80,7 @@ def get_history(n=100):
     try:
         cur = gSQLite3Connection.cursor()
         statement = 'select %s from %s group by text '\
-            'order by id desc limit %s' % (SQLITE3_COL_TEXT, SQLITE3_DB, n)
+            'order by id desc limit %s' % (HISTORY_COL_TEXT, HISTORY_TABLE, n)
         cur.execute(statement)
         texts = cur.fetchall()
         history = []

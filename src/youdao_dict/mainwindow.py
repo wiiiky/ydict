@@ -236,4 +236,9 @@ class MainWindow(Gtk.Window):
 
     def on_error(self, text, e):
         self.spinner.hide()
+        self.web_result.set_text("")
+        self.web_result.hide()
+        self.basic_result.set_text("")
+        self.basic_result.hide()
+        self.resize(1, 1)
         print(text, e)

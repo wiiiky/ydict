@@ -31,6 +31,7 @@ gSQLite3Path = gConfigDir + "/history.sqlite3"
 HISTORY_TABLE = 'query_history'
 HISTORY_COL_TEXT = 'text'
 HISTORY_COL_BASIC = 'basic'
+HISTORY_COL_WEB = 'web'
 HISTORY_COL_TIME = 'time'
 
 try:
@@ -44,23 +45,27 @@ try:
     cur = gSQLite3Connection.cursor()
     cur.execute('create table %s '
                 '(id integer not null primary key autoincrement,'
-                '%s varchar(100) not null,'
-                '%s varchar(100) not null,'
+                '%s varchar(200) not null,'
+                '%s varchar(200) not null,'
+                '%s varchar(200) not null,'
                 '%s integer not null)'
-                % (HISTORY_TABLE, HISTORY_COL_TEXT, HISTORY_COL_BASIC, HISTORY_COL_TIME))
+                % (HISTORY_TABLE, HISTORY_COL_TEXT,
+                    HISTORY_COL_BASIC, HISTORY_COL_WEB,
+                   HISTORY_COL_TIME))
     gSQLite3Connection.commit()
     cur.close()
 except sqlite3.OperationalError:
     pass
 
 
-def record(text, basic=''):
+def record(text, basic, web=''):
     global gSQLite3Connection
 
     cur = gSQLite3Connection.cursor()
-    statement = 'insert into %s(%s,%s,%s) values(?,?,?)'\
-        % (HISTORY_TABLE, HISTORY_COL_TEXT, HISTORY_COL_BASIC, HISTORY_COL_TIME)
-    cur.execute(statement, (text, basic, int(time.time())))
+    statement = 'insert into %s(%s,%s,%s,%s) values(?,?,?,?)'\
+        % (HISTORY_TABLE, HISTORY_COL_TEXT, HISTORY_COL_BASIC,
+            HISTORY_COL_WEB, HISTORY_COL_TIME)
+    cur.execute(statement, (text, basic, web, int(time.time())))
     gSQLite3Connection.commit()
     cur.close()
 
@@ -75,7 +80,7 @@ def clear_all():
     cur.close()
 
 
-def get_history(n=100):
+def get_history_text(n=100):
     try:
         cur = gSQLite3Connection.cursor()
         statement = 'select %s from %s group by text '\

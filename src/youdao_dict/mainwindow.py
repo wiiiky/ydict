@@ -25,7 +25,7 @@ from gi.repository import GObject
 from youdao_dict.query import youdao_query
 from youdao_dict.i18n import _
 from youdao_dict.aboutdialog import AboutDialog
-from youdao_dict.history import record, get_history, clear_all
+from youdao_dict.history import record, get_history_text, clear_all
 from youdao_dict.clipboard import start_listen, stop_listen
 from youdao_dict.config import gConfig
 
@@ -108,7 +108,7 @@ class MainWindow(Gtk.Window):
         # sets GtkEntryCompletion
         self.completion = Gtk.EntryCompletion.new()
         self.completion.set_text_column(0)
-        self.history = get_history()
+        self.history = get_history_text()
         self.model = Gtk.ListStore.new([GObject.TYPE_STRING])
         for text in self.history:
             it = self.model.append()
@@ -172,7 +172,7 @@ class MainWindow(Gtk.Window):
         self.model.clear()
 
     def on_clipboard_text(self, text):
-        if not text:
+        if not text or text == self.querying:
             return
         self.start_query(text)
 
@@ -199,8 +199,8 @@ class MainWindow(Gtk.Window):
         if text != self.querying:
             return
 
+        basic_result = ""
         if "basic" in data:     # replace in operator with has_key in python3
-            basic_result = ""
             if "phonetic" in data["basic"]:
                 basic_result += "[ " + data["basic"]["phonetic"] + " ]\n"
             for basic in data["basic"]["explains"]:
@@ -208,7 +208,6 @@ class MainWindow(Gtk.Window):
             self.basic_result.set_text(basic_result)
             self.basic_expander.set_expanded(True)
             self.basic_result.show()
-            record(text, basic_result)
             if text not in self.history:
                 it = self.model.prepend()
                 self.model.set(it, [0], [text])
@@ -228,6 +227,8 @@ class MainWindow(Gtk.Window):
         else:
             self.web_result.set_text("")
             self.web_result.hide()
+
+        record(text, basic_result, web_result)
 
         self.entry.grab_focus()
         self.entry.select_region(0, -1)

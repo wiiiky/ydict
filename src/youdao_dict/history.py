@@ -83,13 +83,14 @@ def clear_all():
 def get_history_text(n=100):
     try:
         cur = gSQLite3Connection.cursor()
-        statement = 'select %s from %s group by text '\
-            'order by id desc limit %s' % (HISTORY_COL_TEXT, HISTORY_TABLE, n)
+        statement = 'select %s,%s from %s group by text '\
+            'order by id desc limit %s' %\
+            (HISTORY_COL_TEXT, HISTORY_COL_TIME, HISTORY_TABLE, n)
         cur.execute(statement)
         texts = cur.fetchall()
         history = []
         for text in texts:
-            history.append(text[0])
+            history.append((text[0], text[1]))
         cur.close()
         return history
     except Exception as e:

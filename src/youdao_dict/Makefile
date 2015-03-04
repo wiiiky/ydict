@@ -273,6 +273,7 @@ youdao_dict_PYTHON = \
 	history.py \
 	clipboard.py \
 	config.py \
+	historydialog.py \
 	__init__.py
 
 all: all-am
@@ -514,7 +515,6 @@ uninstall-am: uninstall-local uninstall-youdao_dictPYTHON
 
 # Remove ui directory on uninstall
 uninstall-local:
-
 	-rm -r $(pkgdatadir)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

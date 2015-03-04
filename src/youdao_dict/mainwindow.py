@@ -28,6 +28,7 @@ from youdao_dict.aboutdialog import AboutDialog
 from youdao_dict.history import record, get_history_text, clear_all
 from youdao_dict.clipboard import start_listen, stop_listen
 from youdao_dict.config import gConfig
+from youdao_dict.historydialog import HistoryDialog
 
 
 class MainWindow(Gtk.Window):
@@ -76,6 +77,10 @@ class MainWindow(Gtk.Window):
         hyper_setting.connect("toggled", self.on_hyper_toggled)
         setting_menu.append(hyper_setting)
 
+        show_history = Gtk.MenuItem.new_with_mnemonic(_("Show History"))
+        show_history.connect("activate", self.on_show_history)
+        setting_menu.append(show_history)
+
         clear_setting = Gtk.MenuItem.new_with_mnemonic(_("Clear History"))
         clear_setting.connect("activate", self.on_clear_history)
         setting_menu.append(clear_setting)
@@ -110,7 +115,7 @@ class MainWindow(Gtk.Window):
         self.completion.set_text_column(0)
         self.history = get_history_text()
         self.model = Gtk.ListStore.new([GObject.TYPE_STRING])
-        for text in self.history:
+        for text, time in self.history:
             it = self.model.append()
             self.model.set(it, [0], [text])
         self.completion.set_model(self.model)
@@ -170,6 +175,9 @@ class MainWindow(Gtk.Window):
         clear_all()
         self.history = []
         self.model.clear()
+
+    def on_show_history(self, item):
+        HistoryDialog(self).run()
 
     def on_clipboard_text(self, text):
         if not text or text == self.querying:

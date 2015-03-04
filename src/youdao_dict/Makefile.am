@@ -15,11 +15,11 @@ youdao_dict_PYTHON = \
 	history.py \
 	clipboard.py \
 	config.py \
+	historydialog.py \
 	__init__.py
 
 
 
 # Remove ui directory on uninstall
 uninstall-local:
-
 	-rm -r $(pkgdatadir)

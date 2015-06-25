@@ -1,5 +1,4 @@
-# Chinese translations for ydict package
-# ydict 软件包的简体中文翻译.
+# English translations for ydict package.
 # Copyright (C) 2015 THE ydict'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the ydict package.
 # Wiky L <wiiiky@outlook.com>, 2015.
@@ -8,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ydict 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-25 17:53+0800\n"
-"PO-Revision-Date: 2015-01-30 11:26+0800\n"
+"POT-Creation-Date: 2015-06-25 17:51+0800\n"
+"PO-Revision-Date: 2015-06-25 17:52+0800\n"
 "Last-Translator: Wiky L <wiiiky@outlook.com>\n"
-"Language-Team: Chinese (simplified) <translation-team-zh-cn@lists."
-"sourceforge.net>\n"
-"Language: zh_CN\n"
+"Language-Team: English\n"
+"Language: en_US\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=GB2312\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../src/youdao_dict/mainwindow.py:44
 msgid "Y"
@@ -24,56 +23,48 @@ msgstr "Y"
 
 #: ../src/youdao_dict/mainwindow.py:68
 msgid "_Setting"
-msgstr "设置"
+msgstr "_Setting"
 
 #: ../src/youdao_dict/mainwindow.py:73
 msgid "_Hyper Translate"
-msgstr "划词翻译"
+msgstr "_Hyper Translate"
 
 #: ../src/youdao_dict/mainwindow.py:80
 msgid "Show History"
-msgstr "显示历史记录"
+msgstr "Show History"
 
 #: ../src/youdao_dict/mainwindow.py:84
 msgid "Clear History"
-msgstr "清除历史记录"
+msgstr "Clear History"
 
 #: ../src/youdao_dict/mainwindow.py:88
 msgid "_About"
-msgstr "关于"
+msgstr "_About"
 
 #: ../src/youdao_dict/mainwindow.py:92
 msgid "About"
-msgstr "关于"
+msgstr "About"
 
 #: ../src/youdao_dict/mainwindow.py:129
 msgid "Query"
-msgstr "查询"
+msgstr "Query"
 
 #: ../src/youdao_dict/mainwindow.py:140
 msgid "Basic"
-msgstr "基本释义"
+msgstr "Basic"
 
 #: ../src/youdao_dict/mainwindow.py:153
 msgid "Web"
-msgstr "网络解释"
+msgstr "Web"
 
 #: ../src/youdao_dict/aboutdialog.py:33
 msgid "About YDict"
-msgstr "关于Y词典"
+msgstr "About YDict"
 
 #: ../src/youdao_dict/aboutdialog.py:35
 msgid "ydict"
-msgstr "Y词典"
+msgstr "ydict"
 
 #: ../src/youdao_dict/aboutdialog.py:44
 msgid "translator-credits"
-msgstr "Wiky L"
-
-#: ../src/youdao_dict/historydialog.py:35
-msgid "Query History"
-msgstr "查询历史"
-
-#: ../src/youdao_dict/historydialog.py:48
-msgid "Phrase"
-msgstr "词组"
+msgstr "translator-credits"

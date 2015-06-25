@@ -115,7 +115,7 @@ class MainWindow(Gtk.Window):
         self.completion.set_text_column(0)
         self.history = get_history_text()
         self.model = Gtk.ListStore.new([GObject.TYPE_STRING])
-        for text, time in self.history:
+        for text, definition in self.history:
             it = self.model.append()
             self.model.set(it, [0], [text])
         self.completion.set_model(self.model)
@@ -179,9 +179,17 @@ class MainWindow(Gtk.Window):
     def on_show_history(self, item):
         HistoryDialog(self).run()
 
-    def on_clipboard_text(self, text):
+
+    def check_phrase(self, text):
+        text = text.lstrip().rstrip()
         if not text or text == self.querying:
-            return
+            return None
+        for c in text:
+            if ord(c) < 32:
+                return False
+        return text
+
+    def on_clipboard_text(self, text):
         self.start_query(text)
 
     def on_about_item(self, item):
@@ -193,11 +201,12 @@ class MainWindow(Gtk.Window):
 
     def on_query_button(self, button):
         text = self.entry.get_text()
-        if not text:
-            return
         self.start_query(text)
 
     def start_query(self, text):
+        text = self.check_phrase(text)
+        if not text:
+            return
         self.querying = text
         self.spinner.show()
         self.entry.set_text(text)

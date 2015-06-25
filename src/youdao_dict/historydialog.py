@@ -20,7 +20,8 @@
 #
 
 import time
-from gi.repository import Gtk
+from gi.repository import Gtk, Pango
+from youdao_dict.i18n import _
 from youdao_dict.history import get_history_text
 
 
@@ -30,27 +31,35 @@ class HistoryDialog(Gtk.Dialog):
 
     def __init__(self, parent):
         super(HistoryDialog, self).__init__(parent=parent)
-        self.set_border_width(10)
+        self.main_window = parent
+        self.set_title(_('Query History'))
         self.set_default_size(360, 480)
         self.connect("response", self.response_handler)
 
+        scrolledWindow = Gtk.ScrolledWindow.new()
         view = Gtk.TreeView.new()
+        view.set_grid_lines(Gtk.TreeViewGridLines.BOTH)
+        view.set_enable_search(False)
+        view.connect('row-activated', self.on_phrase_selected)
+        scrolledWindow.add(view)
 
-        col = Gtk.TreeViewColumn("Time",
-                                 Gtk.CellRendererText.new(), text=0)
+        cell = Gtk.CellRendererText.new()
+        cell.set_property('ellipsize', Pango.EllipsizeMode.END)
+        col = Gtk.TreeViewColumn(_('Phrase'),cell, text=0)
         view.append_column(col)
 
-        col = Gtk.TreeViewColumn("Text",
-                                 Gtk.CellRendererText.new(), text=1)
-        view.append_column(col)
+        # cell = Gtk.CellRendererText.new()
+        # cell.set_property('ellipsize', Pango.EllipsizeMode.END)
+        # col = Gtk.TreeViewColumn(_('Definition'), cell, text=1)
+        # view.append_column(col)
 
         history = get_history_text()
         model = Gtk.ListStore(str, str)
-        for text, t in history:
-            model.append([time.ctime(t)[4:-5], str(text)])
+        for phrase, definition in history:
+            model.append([str(phrase), str(definition)])
         view.set_model(model)
 
-        self.get_content_area().pack_start(view, True, True, 0)
+        self.get_content_area().pack_start(scrolledWindow, True, True, 0)
         self.get_action_area().set_margin_top(10)
         self.add_buttons(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
 
@@ -60,4 +69,12 @@ class HistoryDialog(Gtk.Dialog):
         if response_id == Gtk.ResponseType.DELETE_EVENT or\
                 response_id == Gtk.ResponseType.CLOSE:
             self.hide()
+            self.destroy()
+
+    def on_phrase_selected(self, tree, path, column):
+        model = tree.get_model()
+        it = model.get_iter(path)
+        if it:
+            phrase = model.get(it,0)[0]
+            self.main_window.start_query(phrase)
             self.destroy()

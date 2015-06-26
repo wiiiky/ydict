@@ -186,7 +186,8 @@ class MainWindow(Gtk.Window):
             return None
         for c in text:
             if ord(c) < 32:
-                return False
+                print('phrase \'%s\' ignored' % text)
+                return None
         return text
 
     def on_clipboard_text(self, text):

@@ -216,25 +216,33 @@ class MainWindow(Gtk.Window):
     def on_success(self, text, data):
         if text != self.querying:
             return
+        print(data)
 
-        basic_result = ""
-        if "basic" in data:     # replace in operator with has_key in python3
+        basic_result = ''
+        if 'basic' in data:     # replace in operator with has_key in python3
             if "phonetic" in data["basic"]:
                 basic_result += "[ " + data["basic"]["phonetic"] + " ]\n"
             for basic in data["basic"]["explains"]:
                 basic_result += basic + "\n"
+        elif 'translation' in data:
+            translations = []
+            for t in data['translation']:
+                translations.append(t)
+            basic_result = ','.join(translations)
+        else:
+            self.basic_result.set_text("")
+            self.basic_result.hide()
+        
+        if basic_result:
             self.basic_result.set_text(basic_result)
             self.basic_expander.set_expanded(True)
             self.basic_result.show()
             if text not in self.history:
                 it = self.model.prepend()
                 self.model.set(it, [0], [text])
-        else:
-            self.basic_result.set_text("")
-            self.basic_result.hide()
 
         web_result = ""
-        if "web" in data:
+        if 'web' in data:
             for web in data["web"]:
                 key = web["key"]
                 value = web["value"]

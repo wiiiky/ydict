@@ -70,7 +70,7 @@ class DictWindow(Gtk.Window):
         menu = Gtk.Menu()
         item.set_submenu(menu)
 
-        item = self._menu_item_with_accel('About', '<Control>a', self._about)
+        item = self._menu_item_with_accel('About', '<Control><Shift>a', self._about)
         menu.append(item)
 
         return bar
@@ -107,7 +107,16 @@ class DictWindow(Gtk.Window):
         self.textview.set_editable(False)
         text_buffer = self.textview.get_buffer()
         text_buffer.create_tag(
-            'h', size_points=20, weight=Pango.Weight.BOLD, style=Pango.Style.ITALIC)
+            'title', size_points=20, weight=Pango.Weight.BOLD, style=Pango.Style.ITALIC, foreground='#000000')
+        text_buffer.create_tag(
+            'phonetic', size_points=12, style=Pango.Style.ITALIC,
+                               foreground="#666666")
+        text_buffer.create_tag(
+            'basic_title', size_points=15, weight=Pango.Weight.BOLD,
+                               foreground='#000000')
+        text_buffer.create_tag('basic', size_points=12, foreground='#000000')
+        text_buffer.create_tag('extra_key', size_points=12,
+                               foreground='#1111ff', style=Pango.Style.ITALIC)
         scrolled_window.add(self.textview)
 
         return scrolled_window
@@ -132,7 +141,7 @@ class DictWindow(Gtk.Window):
         if not text:
             return
         self.statusbar.remove_all(1)
-        self.statusbar.push(1, 'looking up %s' % text)
+        self.statusbar.push(1, 'Searching for \'%s\'' % text)
         lookup(text, self._on_success, self._on_error)
 
     def _on_success(self, text, data):
@@ -143,7 +152,24 @@ class DictWindow(Gtk.Window):
         text_buffer = self.textview.get_buffer()
         text_buffer.set_text('', -1)
         text_buffer.insert_with_tags_by_name(
-            text_buffer.get_end_iter(), '\t' + data.title() + '\n', 'h')
+            text_buffer.get_end_iter(), '  %s ' % data.get_title(), 'title')
+        text_buffer.insert_with_tags_by_name(
+            text_buffer.get_end_iter(), '%s\n' % data.get_phonetic(), 'phonetic')
+        text_buffer.insert_with_tags_by_name(
+            text_buffer.get_end_iter(), 'Basic:\n', 'basic_title')
+        for basic in data.get_basic():
+            text_buffer.insert_with_tags_by_name(
+                text_buffer.get_end_iter(), '\t%s\n' % basic, 'basic')
+        extra = data.get_extra()
+        if not extra:
+            return
+        text_buffer.insert_with_tags_by_name(
+            text_buffer.get_end_iter(), 'Extra:\n', 'basic_title')
+        for ex in extra:
+            text_buffer.insert_with_tags_by_name(
+                text_buffer.get_end_iter(), '\t%s: ' % ex['key'], 'extra_key')
+            text_buffer.insert_with_tags_by_name(
+                text_buffer.get_end_iter(), '%s\n' % ex['value'], 'basic')
 
     def _on_error(self, text, e):
         self.statusbar.push(1, 'error: %s' % str(e))

@@ -17,5 +17,14 @@ class ResultData (object):
         """判断数据是否有错误"""
         return self.errorCode != 0
 
-    def title(self):
+    def get_title(self):
         return ''
+
+    def get_phonetic(self):
+        return ''
+
+    def get_basic(self):
+        return ['']
+
+    def get_extra(self):
+        return [{'key': '', 'value': ''}]

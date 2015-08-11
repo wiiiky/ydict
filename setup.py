@@ -9,7 +9,7 @@ except:
 
 setup(
     name='ydict',
-    version='0.2.0',
+    version='1.0.0',
     description='Online Dictionary',
     long_description=''.join(open('README').readlines()),
     keywords='Chinese, English, Dictionary, Youdao',
@@ -17,7 +17,12 @@ setup(
     author_email='wiiiky@outlook.com',
     license='GPLv3',
     scripts=['bin/ydict.py'],
+    url='https://github.com/wiiiky/ydict',
     packages=['pydict', 'pydict.youdao', 'pydict.base'],
+    data_files=[
+        ('/usr/share/icons/gnome/scalable/apps', ['data/ydict.svg']),
+        ('/usr/share/applications', ['data/ydict.desktop'])
+    ],
     package_dir={
         'pydict': 'pydict',
         'pydict.youdao': 'pydict/youdao',

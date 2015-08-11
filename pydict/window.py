@@ -3,6 +3,7 @@
 
 from gi.repository import Gtk, Gdk, Pango
 from pydict.http import lookup
+from pydict.about import AboutDialog
 
 
 class DictWindow(Gtk.Window):
@@ -70,7 +71,8 @@ class DictWindow(Gtk.Window):
         menu = Gtk.Menu()
         item.set_submenu(menu)
 
-        item = self._menu_item_with_accel('About', '<Control><Shift>a', self._about)
+        item = self._menu_item_with_accel(
+            'About', '<Control><Shift>a', self._about)
         menu.append(item)
 
         return bar
@@ -134,7 +136,8 @@ class DictWindow(Gtk.Window):
             Gtk.main_quit()
 
     def _about(self, widget):
-        print('about')
+        dialog = AboutDialog(self)
+        dialog.show()
 
     def _lookup(self, widget):
         text = self.entry.get_text()

@@ -1,0 +1,16 @@
+[Desktop Entry]
+Name=Ydict
+Name[zh_CN]=Y字典
+Name[zh_HK]=Y字典
+Name[zh_TW]=Y字典
+Comment=Check word Chinese/English definitions in an online dictionary
+Comment[zh_CN]=使用在线服务实现的英汉词典
+Keywords=word;dictionary
+Keywords[zh_CN]=word;dictionary;单词;翻译;词典;字典;
+Exec=ydict.py
+Terminal=false
+Type=Application
+Icon=/usr/share/icons/gnome/scalable/apps/ydict.svg
+StartupNotify=true
+Categories=GNOME;GTK;Office;Dictionary;
+NotShowIn=KDE;

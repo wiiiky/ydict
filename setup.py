@@ -26,6 +26,7 @@ setup(
     package_dir={
         'pydict': 'pydict',
         'pydict.youdao': 'pydict/youdao',
+        'pydict.glosbe': 'pydict/glosbe',
         'pydict.base': 'pydict/base'
     },
     classifiers=[

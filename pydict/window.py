@@ -4,6 +4,7 @@
 from gi.repository import Gtk, Gdk, Pango
 from pydict.http import lookup
 from pydict.about import AboutDialog
+from pydict.preference import PreferenceDialog
 
 
 class DictWindow(Gtk.Window):
@@ -45,6 +46,7 @@ class DictWindow(Gtk.Window):
             signal, self.accelerators, key, mod, Gtk.AccelFlags.VISIBLE)
 
     def _menu_item_with_accel(self, label, accelerator, handler=None):
+        """创建一个带快捷键的菜单项(MenuItem)"""
         item = Gtk.MenuItem.new_with_label(label)
         if handler:
             item.connect('activate', handler)
@@ -63,6 +65,10 @@ class DictWindow(Gtk.Window):
 
         item = self._menu_item_with_accel('New', '<Control>n', self._new)
         menu.append(item)
+        item = self._menu_item_with_accel(
+            'Preference', '<Control>p', self._preference)
+        menu.append(item)
+        menu.append(Gtk.SeparatorMenuItem.new())
         item = self._menu_item_with_accel('Quit', '<Control>q', self._quit)
         menu.append(item)
 
@@ -100,6 +106,7 @@ class DictWindow(Gtk.Window):
         return hbox
 
     def _create_textview(self):
+        """创建显示搜索结果的TextArea界面，包括必要的TAG"""
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_hexpand(True)
         scrolled_window.set_vexpand(True)
@@ -109,13 +116,14 @@ class DictWindow(Gtk.Window):
         self.textview.set_editable(False)
         text_buffer = self.textview.get_buffer()
         text_buffer.create_tag(
-            'title', size_points=20, weight=Pango.Weight.BOLD, style=Pango.Style.ITALIC, foreground='#000000')
+            'title', size_points=20, weight=Pango.Weight.BOLD,
+            style=Pango.Style.ITALIC, foreground='#000000')
         text_buffer.create_tag(
             'phonetic', size_points=12, style=Pango.Style.ITALIC,
-                               foreground="#666666")
+            foreground="#666666")
         text_buffer.create_tag(
             'basic_title', size_points=15, weight=Pango.Weight.BOLD,
-                               foreground='#000000')
+            foreground='#000000')
         text_buffer.create_tag('basic', size_points=12, foreground='#000000')
         text_buffer.create_tag('extra_key', size_points=12,
                                foreground='#1111ff', style=Pango.Style.ITALIC)
@@ -124,18 +132,27 @@ class DictWindow(Gtk.Window):
         return scrolled_window
 
     def _create_status_bar(self):
+        """创建状态栏"""
         self.statusbar = Gtk.Statusbar()
         return self.statusbar
 
-    def _new(self, widget):
+    def _new(self, *args):
+        """菜单项New的回调函数"""
         win = DictWindow(position=Gtk.WindowPosition.NONE)
 
     def _quit(self, *args):
+        """菜单项Quit的回调函数"""
         self.destroy()
         if DictWindow.INSTANCE_COUNT <= 0:
             Gtk.main_quit()
 
+    def _preference(self, *args):
+        """菜单项Preference的回调函数，打开设置界面"""
+        dialog = PreferenceDialog(self)
+        dialog.show()
+
     def _about(self, widget):
+        """菜单项About的回调函数，打开关于对话框"""
         dialog = AboutDialog(self)
         dialog.show()
 
@@ -148,6 +165,7 @@ class DictWindow(Gtk.Window):
         lookup(text, self._on_success, self._on_error)
 
     def _on_success(self, text, data):
+        """查询成功"""
         if data.has_error():
             self.statusbar.push(1, 'errorCode: %s' % data.errorCode)
             return
@@ -175,4 +193,5 @@ class DictWindow(Gtk.Window):
                 text_buffer.get_end_iter(), '%s\n' % ex['value'], 'basic')
 
     def _on_error(self, text, e):
+        """查询失败"""
         self.statusbar.push(1, 'error: %s' % str(e))

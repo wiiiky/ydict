@@ -20,8 +20,10 @@ API_SERVICES = {
 
 SERVICE_NAME = 'youdao'
 
+
 def get_config():
     return API_SERVICES[SERVICE_NAME]['config']
+
 
 def get_data():
     return API_SERVICES[SERVICE_NAME]['data']

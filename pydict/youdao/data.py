@@ -1,6 +1,6 @@
 # encoding=utf8
 
-from pydict.base import data as base
+from ..base import data as base
 
 
 class ResultData (base.ResultData):

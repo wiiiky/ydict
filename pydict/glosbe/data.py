@@ -1,6 +1,6 @@
 # encoding=utf8
 
-from pydict.base import data as base
+from ..base import data as base
 
 
 class ResultData (base.ResultData):
@@ -9,9 +9,9 @@ class ResultData (base.ResultData):
         """data是一个JSON对象"""
         self.result = data['result']
         if self.result != 'ok':
-            self.errorCode=1
+            self.errorCode = 1
             return
-        self.errorCode=0
+        self.errorCode = 0
         self.query = base.get_dict_value(data, 'phrase')
         self.tuc = base.get_dict_value(data, 'tuc', [])
 
@@ -35,5 +35,5 @@ class ResultData (base.ResultData):
         for tuc in self.tuc:
             if 'meanings' in tuc:
                 for meaning in tuc['meanings']:
-                    extra.append({'key':self.query, 'value': meaning['text']})
+                    extra.append({'key': self.query, 'value': meaning['text']})
         return extra

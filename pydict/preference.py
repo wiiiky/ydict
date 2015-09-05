@@ -3,20 +3,26 @@
 
 
 from gi.repository import Gtk
-import importlib
+from . import api
 import pkgutil
 import os
 
 
 def list_services():
+    """
+    列出所有接口模块信息
+    """
     services = []
     for loader, module_name, is_pkg in pkgutil.walk_packages(os.path.dirname(__file__)):
         if is_pkg:
             mod = loader.find_module(module_name).load_module(module_name)
             try:
-                if mod.DICT_SERVICE:
-                    services.append({'name': module_name,
-                                     'description': mod.DICT_DESCRIPTION})
+                if mod.DICT_INFO and mod.DICT_INFO['enable']:
+                    info = dict(mod.DICT_INFO)
+                    info['module_name'] = module_name
+                    if 'description' not in info:
+                        info['description'] = 'no description'
+                    services.append(info)
             except:
                 pass
     return services
@@ -52,13 +58,40 @@ class PreferenceDialog (Gtk.Dialog):
         switcher.set_stack(stack)
         tree = Gtk.TreeView.new()
         stack.add_titled(tree, 'dict', 'Source')
-        print(list_services())
 
+        # 接口列表
+        renderer = Gtk.CellRendererToggle.new()
+        renderer.connect("toggled", self._cell_toggled)
+        renderer.set_radio(True)
+        tree.append_column(Gtk.TreeViewColumn('Enable', renderer, active=0))
+        renderer = Gtk.CellRendererText.new()
+        tree.append_column(Gtk.TreeViewColumn('Dict', renderer, text=1))
+        tree.append_column(Gtk.TreeViewColumn('Description', renderer, text=2))
+
+        store = Gtk.ListStore(bool, str, str, str)
+        for service in list_services():
+            enable = False
+            if api.API == service['module_name']:
+                enable = True
+            store.append([enable, service['name'],
+                          service['description'], service['module_name']])
+        tree.set_model(store)
+
+        self.store = store
         content.show_all()
+
+    def _cell_toggled(self, renderer, path):
+        if self.store[path][0]:
+            return
+        for row in self.store:
+            row[0] = False
+        self.store[path][0] = True
 
     def _response(self, widget, ID, *args):
         if ID == Gtk.ResponseType.OK:
-            print('ok')
-        else:
-            print('ID =', ID)
+            for row in self.store:
+                if row[0]:
+                    api.API = row[3]
+                    print('[DEBUG]: change API service to %s' % api.API)
+                    break
         self.destroy()

@@ -1,5 +1,8 @@
 # encoding=utf8
 # https://zh.glosbe.com/a-api
 
-DICT_SERVICE = True
-DICT_DESCRIPTION = 'glosbe'
+DICT_INFO = {
+    'name': 'GLOSBE',
+    'description': 'https://zh.glosbe.com/a-api提供的词典接口',
+    'enable': True
+}

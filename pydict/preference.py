@@ -1,5 +1,5 @@
 # encoding=utf8
-# 设置的窗口
+# 设置界面
 
 
 from gi.repository import Gtk
@@ -13,7 +13,8 @@ def list_services():
     列出所有接口模块信息
     """
     services = []
-    for loader, module_name, is_pkg in pkgutil.walk_packages(os.path.dirname(__file__)):
+    for loader, module_name, is_pkg in\
+            pkgutil.walk_packages(os.path.dirname(__file__)):
         if is_pkg:
             mod = loader.find_module(module_name).load_module(module_name)
             try:

@@ -1,5 +1,16 @@
 # encoding=utf8
 
 
-def build_url(q):
-    return ''
+class BaseConfig (object):
+
+    @staticmethod
+    def build_url(q):
+        return ''
+
+    @staticmethod
+    def get_options():
+        return {}
+
+    @staticmethod
+    def get_option():
+        return ''

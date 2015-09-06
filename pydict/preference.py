@@ -21,10 +21,21 @@ def list_services():
                 if mod.DICT_INFO and mod.DICT_INFO['enable']:
                     info = dict(mod.DICT_INFO)
                     info['module_name'] = module_name
-                    if 'description' not in info:
-                        info['description'] = 'no description'
+
+                    def set_default(d, name, default):
+                        if name not in d:
+                            d[name] = default
+
+                    set_default(info, 'description', 'no description')
+
+                    config_name = '%s.config' % module_name
+                    config = pkgutil.find_loader(
+                        config_name).load_module(config_name)
+                    info['options'] = config.Config.get_options()
+                    info['current'] = config.Config.get_option()
                     services.append(info)
-            except:
+                    print(info)
+            except Exception as e:
                 pass
     return services
 
@@ -68,18 +79,37 @@ class PreferenceDialog (Gtk.Dialog):
         renderer = Gtk.CellRendererText.new()
         tree.append_column(Gtk.TreeViewColumn('Dict', renderer, text=1))
         tree.append_column(Gtk.TreeViewColumn('Description', renderer, text=2))
+        renderer = Gtk.CellRendererCombo.new()
+        renderer.set_property("editable", True)
+        # renderer.set_property("model", liststore_manufacturers)
+        renderer.set_property("text-column", 0)
+        renderer.set_property("has-entry", False)
+        renderer.connect("edited", self._on_option_changed)
+        tree.append_column(Gtk.TreeViewColumn('Options', renderer,
+                                              model=3, text=4))
 
-        store = Gtk.ListStore(bool, str, str, str)
-        for service in list_services():
+        store = Gtk.ListStore(bool, str, str, Gtk.TreeModel, str, str)
+        self.services = list_services()
+        for service in self.services:
             enable = False
             if api.API == service['module_name']:
                 enable = True
-            store.append([enable, service['name'],
-                          service['description'], service['module_name']])
+            options = Gtk.ListStore(str, object)
+            for name, func in service['options'].items():
+                options.append([name, func])
+            store.append([enable,
+                          service['name'],
+                          service['description'],
+                          options,
+                          service['current'],
+                          service['module_name']])
         tree.set_model(store)
 
         self.store = store
         content.show_all()
+
+    def _on_option_changed(self, widget, path, text):
+        self.store[path][4] = text
 
     def _cell_toggled(self, renderer, path):
         if self.store[path][0]:
@@ -90,9 +120,21 @@ class PreferenceDialog (Gtk.Dialog):
 
     def _response(self, widget, ID, *args):
         if ID == Gtk.ResponseType.OK:
-            for row in self.store:
-                if row[0]:
-                    api.API = row[3]
-                    print('[DEBUG]: change API service to %s' % api.API)
-                    break
+            self._save()
         self.destroy()
+
+    def _save(self):
+        """保存配置"""
+        for row in self.store:
+            if row[0]:
+                api.API = row[-1]
+                options = row[3]
+                selected = row[4]
+                for opt in options:
+                    print(opt)
+                    if opt[0] == selected:
+                        opt[1]()
+                        print('[DEBUG]: option %s' % selected)
+                        break
+                print('[DEBUG]: change API service to %s' % api.API)
+                break

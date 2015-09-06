@@ -26,7 +26,7 @@ def on_read(stream, result, data):
         bytes = stream.read_bytes_finish(result)
         jdata = json.loads(str(bytes.get_data(), 'utf-8'))
         print('[DEBUG]: %s' % str(jdata))
-        data = api.get_data().ResultData(jdata)
+        data = api.get_data()(jdata)
         callback(success, text, data, user_data)
     except Exception as e:
         callback(error, text, e, user_data)

@@ -7,7 +7,7 @@ def get_dict_value(d, name, defvalue=''):
     return defvalue
 
 
-class ResultData (object):
+class BaseData (object):
 
     def __init__(self, data):
         self.errorCode = 1

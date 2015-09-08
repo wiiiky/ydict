@@ -15,28 +15,30 @@ def list_services():
     services = []
     for loader, module_name, is_pkg in\
             pkgutil.walk_packages(os.path.dirname(__file__)):
-        if is_pkg:
-            mod = loader.find_module(module_name).load_module(module_name)
-            try:
-                if mod.DICT_INFO and mod.DICT_INFO['enable']:
-                    info = dict(mod.DICT_INFO)
-                    info['module_name'] = module_name
+        if not is_pkg:
+            continue
 
-                    def set_default(d, name, default):
-                        if name not in d:
-                            d[name] = default
+        mod = loader.find_module(module_name).load_module(module_name)
+        try:
+            if mod.DICT_INFO and mod.DICT_INFO['enable']:
+                info = dict(mod.DICT_INFO)
+                info['module_name'] = module_name
 
-                    set_default(info, 'description', 'no description')
+                def set_default(d, name, default):
+                    if name not in d:
+                        d[name] = default
 
-                    config_name = '%s.config' % module_name
-                    config = pkgutil.find_loader(
-                        config_name).load_module(config_name)
-                    info['options'] = config.Config.get_options()
-                    info['current'] = config.Config.get_option()
-                    services.append(info)
-                    print(info)
-            except Exception as e:
-                pass
+                set_default(info, 'description', 'no description')
+
+                config_name = '%s.config' % module_name
+                config = pkgutil.find_loader(
+                    config_name).load_module(config_name)
+                info['options'] = config.Config.get_options()
+                info['current'] = config.Config.get_option()
+                services.append(info)
+                print(info)
+        except Exception as e:
+            pass
     return services
 
 
@@ -81,7 +83,6 @@ class PreferenceDialog (Gtk.Dialog):
         tree.append_column(Gtk.TreeViewColumn('Description', renderer, text=2))
         renderer = Gtk.CellRendererCombo.new()
         renderer.set_property("editable", True)
-        # renderer.set_property("model", liststore_manufacturers)
         renderer.set_property("text-column", 0)
         renderer.set_property("has-entry", False)
         renderer.connect("edited", self._on_option_changed)
@@ -131,10 +132,9 @@ class PreferenceDialog (Gtk.Dialog):
                 options = row[3]
                 selected = row[4]
                 for opt in options:
-                    print(opt)
                     if opt[0] == selected:
                         opt[1]()
-                        print('[DEBUG]: option %s' % selected)
+                        print('[DEBUG]', 'option %s' % selected)
                         break
-                print('[DEBUG]: change API service to %s' % api.API)
+                print('[DEBUG]', 'change API service to %s' % api.API)
                 break

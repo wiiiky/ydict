@@ -27,10 +27,12 @@ class Config (config.BaseConfig):
             return 'en->zh'
         return 'zh->en'
 
+    @staticmethod
     def eng_zh():
         Config.FROM = 'eng'
         Config.DEST = 'zh'
 
+    @staticmethod
     def zh_eng():
         Config.FROM = 'zh'
         Config.DEST = 'eng'

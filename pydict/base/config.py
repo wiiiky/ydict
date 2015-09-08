@@ -8,6 +8,10 @@ class BaseConfig (object):
         return ''
 
     @staticmethod
+    def build_headers():
+        return {}
+
+    @staticmethod
     def get_options():
         return {}
 

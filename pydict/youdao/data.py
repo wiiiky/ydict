@@ -3,7 +3,7 @@
 from ..base import data as base
 
 
-class ResultData (base.ResultData):
+class ResultData (base.BaseData):
 
     def __init__(self, data):
         """data是一个JSON对象"""

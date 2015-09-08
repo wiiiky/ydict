@@ -12,4 +12,5 @@ class Config (config.BaseConfig):
 
     @staticmethod
     def build_url(q):
-        return Config.YOUDAO_URL % (Config.YOUDAO_KEYFROM, Config.YOUDAO_KEY, q)
+        return Config.YOUDAO_URL %\
+            (Config.YOUDAO_KEYFROM, Config.YOUDAO_KEY, q)

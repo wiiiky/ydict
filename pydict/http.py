@@ -25,7 +25,7 @@ def on_read(stream, result, data):
     try:
         bytes = stream.read_bytes_finish(result)
         jdata = json.loads(str(bytes.get_data(), 'utf-8'))
-        print('[DEBUG]: %s' % str(jdata))
+        print('[DEBUG]', '%s' % str(jdata))
         data = api.get_data()(jdata)
         callback(success, text, data, user_data)
     except Exception as e:
@@ -45,8 +45,13 @@ def on_result(req, result, data):
 def lookup(text, success, error, user_data=None):
     try:
         url = api.get_config().build_url(text)
-        request = SESSION.request(url)
-        request.send_async(None, on_result,
+        msg = Soup.Message.new('GET', url)
+        print('[DEBUG]', 'GET - %s' % url)
+        headers = Soup.MessageHeaders.new(Soup.MessageHeadersType.REQUEST)
+        for key, value in api.get_config().build_headers().items():
+            msg.request_headers.append(key, value)
+            print('[DEBUG]', 'header - %s: %s' % (key, value))
+        SESSION.send_async(msg, None, on_result,
                            {'success': success, 'error': error,
                             'text': text, 'user_data': user_data})
     except Exception as e:

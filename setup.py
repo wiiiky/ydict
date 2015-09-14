@@ -27,6 +27,7 @@ setup(
         'pydict': 'pydict',
         'pydict.youdao': 'pydict/youdao',
         'pydict.glosbe': 'pydict/glosbe',
+        'pydict.baidu': 'pydict/baidu',
         'pydict.base': 'pydict/base'
     },
     classifiers=[

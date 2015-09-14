@@ -24,7 +24,9 @@ class BaseData (object):
         return ''
 
     def get_basic(self):
+        """返回基本释义的列表"""
         return ['']
 
     def get_extra(self):
+        """返回额外解释的列表，包含健和值"""
         return [{'key': '', 'value': ''}]

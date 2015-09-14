@@ -59,19 +59,9 @@ class PreferenceDialog (Gtk.Dialog):
         self.connect('response', self._response)
         self._init_content()
 
-    def _init_content(self):
-        """初始化界面元素"""
-        content = self.get_content_area()
-        main = Gtk.Box.new(Gtk.Orientation.VERTICAL, 10)
-        main.set_margin_bottom(15)
-        content.pack_start(main, True, True, 0)
-        switcher = Gtk.StackSwitcher.new()
-        main.pack_start(switcher, False, False, 0)
-        stack = Gtk.Stack.new()
-        main.pack_start(stack, True, True, 0)
-        switcher.set_stack(stack)
+    def _init_service_tree(self):
+        """初始化接口选择界面"""
         tree = Gtk.TreeView.new()
-        stack.add_titled(tree, 'dict', 'Source')
 
         # 接口列表
         renderer = Gtk.CellRendererToggle.new()
@@ -107,6 +97,31 @@ class PreferenceDialog (Gtk.Dialog):
         tree.set_model(store)
 
         self.store = store
+        return tree
+
+    def _init_network_view(self):
+        """初始化网络设置界面"""
+        box = Gtk.Box.new(Gtk.Orientation.VERTICAL, 10)
+        label = Gtk.Label.new('Network Settings')
+        box.pack_start(label, True, True, 0)
+        return box
+
+    def _init_content(self):
+        """初始化界面元素"""
+        content = self.get_content_area()
+        main = Gtk.Box.new(Gtk.Orientation.VERTICAL, 10)
+        main.set_margin_bottom(15)
+        content.pack_start(main, True, True, 0)
+        switcher = Gtk.StackSwitcher.new()
+        main.pack_start(switcher, False, False, 0)
+        stack = Gtk.Stack.new()
+        stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT)
+        main.pack_start(stack, True, True, 0)
+        switcher.set_stack(stack)
+
+        stack.add_titled(self._init_service_tree(), 'src', 'Source')
+        stack.add_titled(self._init_network_view(), 'net', 'Network')
+
         content.show_all()
 
     def _on_option_changed(self, widget, path, text):

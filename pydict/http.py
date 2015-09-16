@@ -7,6 +7,7 @@ import json
 
 
 SESSION = Soup.Session()
+PROXY_URI = ''
 
 
 def callback(f, text, data, user_data):
@@ -35,6 +36,7 @@ def on_read(stream, result, data):
 def on_result(req, result, data):
     error = data['error']
     user_data = data['user_data']
+    text = data['text']
     try:
         stream = req.send_finish(result)
         stream.read_bytes_async(40960, 100, None, on_read, data)
@@ -51,6 +53,13 @@ def lookup(text, success, error, user_data=None):
         for key, value in api.get_config().build_headers().items():
             msg.request_headers.append(key, value)
             print('[DEBUG]', 'header - %s: %s' % (key, value))
+        try:
+            SESSION.props.proxy_uri = Soup.URI.new(PROXY_URI)
+            print('[DEBUG]', 'proxy %s' % PROXY_URI)
+        except Exception as e:
+            print('[DEBUG]', '%s' %
+                  'no proxy' if not PROXY_URI else 'invalid proxy %s' % PROXY_URI)
+            SESSION.props.proxy_uri = None
         SESSION.send_async(msg, None, on_result,
                            {'success': success, 'error': error,
                             'text': text, 'user_data': user_data})

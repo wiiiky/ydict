@@ -10,7 +10,8 @@ try:
     from pydict.base import data as base
 except:
     # 否则试图从当前目录导入
-    import os, sys
+    import os
+    import sys
     sys.path.append(os.path.curdir)
 
 from pydict.window import *

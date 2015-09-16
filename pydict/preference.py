@@ -4,6 +4,7 @@
 
 from gi.repository import Gtk
 from . import api
+from . import http
 import pkgutil
 import os
 
@@ -102,8 +103,19 @@ class PreferenceDialog (Gtk.Dialog):
     def _init_network_view(self):
         """初始化网络设置界面"""
         box = Gtk.Box.new(Gtk.Orientation.VERTICAL, 10)
-        label = Gtk.Label.new('Network Settings')
-        box.pack_start(label, True, True, 0)
+        grid = Gtk.Grid.new()
+        grid.set_column_spacing(10)
+        grid.set_hexpand(True)
+        box.pack_start(grid, True, True, 0)
+
+        label = Gtk.Label.new('HTTP代理:')
+        grid.attach(label, 0, 0, 1, 1)
+        proxy = Gtk.Entry.new()
+        proxy.set_hexpand(True)
+        proxy.set_placeholder_text('localhost:12345')
+        proxy.set_text(http.PROXY_URI)
+        grid.attach(proxy, 1, 0, 2, 1)
+        self.proxy = proxy
         return box
 
     def _init_content(self):
@@ -153,3 +165,9 @@ class PreferenceDialog (Gtk.Dialog):
                         break
                 print('[DEBUG]', 'change API service to %s' % api.API)
                 break
+
+        proxy = self.proxy.get_text()
+        if proxy and not proxy.startswith('http://'):
+            proxy = 'http://' + proxy
+        http.PROXY_URI = proxy
+        print('[DEBUG]', 'proxy = %s' % http.PROXY_URI)

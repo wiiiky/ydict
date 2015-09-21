@@ -34,8 +34,6 @@ class ResultData (base.BaseData):
         return basic
 
     def get_extra(self):
-        if not self.web:
-            return []
         extra = []
         for w in self.web:
             key = w['key']

@@ -2,7 +2,8 @@
 # 执行查询
 
 from gi.repository import Soup
-from pydict import api
+from . import api
+from . import log
 import json
 
 
@@ -26,7 +27,7 @@ def on_read(stream, result, data):
     try:
         bytes = stream.read_bytes_finish(result)
         jdata = json.loads(str(bytes.get_data(), 'utf-8'))
-        print('[DEBUG]', '%s' % str(jdata))
+        log.debug(str(jdata))
         data = api.get_data()(jdata)
         callback(success, text, data, user_data)
     except Exception as e:
@@ -48,17 +49,17 @@ def lookup(text, success, error, user_data=None):
     try:
         url = api.get_config().build_url(text)
         msg = Soup.Message.new('GET', url)
-        print('[DEBUG]', 'GET - %s' % url)
+        log.debug('GET - %s' % url)
         headers = Soup.MessageHeaders.new(Soup.MessageHeadersType.REQUEST)
         for key, value in api.get_config().build_headers().items():
             msg.request_headers.append(key, value)
-            print('[DEBUG]', 'header - %s: %s' % (key, value))
+            log.debug('header - %s: %s' % (key, value))
         try:
             SESSION.props.proxy_uri = Soup.URI.new(PROXY_URI)
-            print('[DEBUG]', 'proxy %s' % PROXY_URI)
+            log.debug('proxy %s' % PROXY_URI)
         except Exception as e:
-            print('[DEBUG]', '%s' %
-                  'no proxy' if not PROXY_URI else 'invalid proxy %s' % PROXY_URI)
+            log.debug(
+                '%s' % 'no proxy' if not PROXY_URI else 'invalid proxy %s' % PROXY_URI)
             SESSION.props.proxy_uri = None
         SESSION.send_async(msg, None, on_result,
                            {'success': success, 'error': error,

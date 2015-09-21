@@ -5,6 +5,7 @@
 from gi.repository import Gtk
 from . import api
 from . import http
+from . import log
 import pkgutil
 import os
 
@@ -37,7 +38,6 @@ def list_services():
                 info['options'] = config.Config.get_options()
                 info['current'] = config.Config.get_option()
                 services.append(info)
-                print(info)
         except Exception as e:
             pass
     return services
@@ -154,20 +154,21 @@ class PreferenceDialog (Gtk.Dialog):
     def _save(self):
         """保存配置"""
         for row in self.store:
-            if row[0]:
-                api.API = row[-1]
-                options = row[3]
-                selected = row[4]
-                for opt in options:
-                    if opt[0] == selected:
-                        opt[1]()
-                        print('[DEBUG]', 'option %s' % selected)
-                        break
-                print('[DEBUG]', 'change API service to %s' % api.API)
-                break
+            if not row[0]:
+                continue
+            api.API = row[-1]
+            options = row[3]
+            selected = row[4]
+            for opt in options:
+                if opt[0] == selected:
+                    opt[1]()
+                    log.debug('option %s' % selected)
+                    break
+            log.debug('change API service to %s' % api.API)
+            break
 
         proxy = self.proxy.get_text()
         if proxy and not proxy.startswith('http://'):
             proxy = 'http://' + proxy
         http.PROXY_URI = proxy
-        print('[DEBUG]', 'proxy = %s' % http.PROXY_URI)
+        log.debug('proxy = %s' % http.PROXY_URI)

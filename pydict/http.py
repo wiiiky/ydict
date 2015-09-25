@@ -4,11 +4,11 @@
 from gi.repository import Soup
 from . import api
 from . import log
+from . import config
 import json
 
 
 SESSION = Soup.Session()
-PROXY_URI = ''
 
 
 def callback(f, text, data, user_data):
@@ -55,11 +55,11 @@ def lookup(text, success, error, user_data=None):
             msg.request_headers.append(key, value)
             log.debug('header - %s: %s' % (key, value))
         try:
-            SESSION.props.proxy_uri = Soup.URI.new(PROXY_URI)
-            log.debug('proxy %s' % PROXY_URI)
+            SESSION.props.proxy_uri = Soup.URI.new(config.PROXY_URI)
+            log.debug('proxy %s' % config.PROXY_URI)
         except Exception as e:
             log.debug(
-                '%s' % 'no proxy' if not PROXY_URI else 'invalid proxy %s' % PROXY_URI)
+                '%s' % 'no proxy' if not config.PROXY_URI else 'invalid proxy %s' % config.PROXY_URI)
             SESSION.props.proxy_uri = None
         SESSION.send_async(msg, None, on_result,
                            {'success': success, 'error': error,

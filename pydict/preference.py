@@ -3,9 +3,8 @@
 
 
 from gi.repository import Gtk
-from . import api
-from . import http
 from . import log
+from . import config
 import pkgutil
 import os
 
@@ -84,7 +83,7 @@ class PreferenceDialog (Gtk.Dialog):
         self.services = list_services()
         for service in self.services:
             enable = False
-            if api.API == service['module_name']:
+            if config.API == service['module_name']:
                 enable = True
             options = Gtk.ListStore(str, object)
             for name, func in service['options'].items():
@@ -113,7 +112,7 @@ class PreferenceDialog (Gtk.Dialog):
         proxy = Gtk.Entry.new()
         proxy.set_hexpand(True)
         proxy.set_placeholder_text('localhost:12345')
-        proxy.set_text(http.PROXY_URI)
+        proxy.set_text(config.PROXY_URI)
         grid.attach(proxy, 1, 0, 2, 1)
         self.proxy = proxy
         return box
@@ -156,7 +155,7 @@ class PreferenceDialog (Gtk.Dialog):
         for row in self.store:
             if not row[0]:
                 continue
-            api.API = row[-1]
+            config.API = row[-1]
             options = row[3]
             selected = row[4]
             for opt in options:
@@ -164,11 +163,11 @@ class PreferenceDialog (Gtk.Dialog):
                     opt[1]()
                     log.debug('option %s' % selected)
                     break
-            log.debug('change API service to %s' % api.API)
+            log.debug('change API service to %s' % config.API)
             break
 
         proxy = self.proxy.get_text()
         if proxy and not proxy.startswith('http://'):
             proxy = 'http://' + proxy
-        http.PROXY_URI = proxy
-        log.debug('proxy = %s' % http.PROXY_URI)
+        config.PROXY_URI = proxy
+        log.debug('proxy = %s' % config.PROXY_URI)

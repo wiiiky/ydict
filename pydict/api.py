@@ -2,18 +2,14 @@
 
 
 import importlib
-
-
-API = 'pydict.youdao'
+from . import config
 
 
 def get_config():
-    global API
-    config = importlib.import_module('%s.config' % API)
-    return config.Config
+    mod = importlib.import_module('%s.config' % config.API)
+    return mod.Config
 
 
 def get_data():
-    global API
-    data = importlib.import_module('%s.data' % API)
-    return data.ResultData
+    mod = importlib.import_module('%s.data' % config.API)
+    return mod.ResultData

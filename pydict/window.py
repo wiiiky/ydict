@@ -5,6 +5,8 @@ from gi.repository import Gtk, Gdk, Pango
 from pydict.http import lookup
 from pydict.about import AboutDialog
 from pydict.preference import PreferenceDialog
+from pydict.config import save_config
+from pydict.config import load_config
 
 
 class DictWindow(Gtk.Window):
@@ -35,6 +37,9 @@ class DictWindow(Gtk.Window):
         self.show_all()
 
         DictWindow.INSTANCE_COUNT += 1
+
+        if DictWindow.INSTANCE_COUNT == 1:
+            load_config()
 
     def destroy(self):
         super(DictWindow, self).destroy()
@@ -145,6 +150,7 @@ class DictWindow(Gtk.Window):
         self.destroy()
         if DictWindow.INSTANCE_COUNT <= 0:
             Gtk.main_quit()
+            save_config()
 
     def _preference(self, *args):
         """菜单项Preference的回调函数，打开设置界面"""

@@ -1,4 +1,4 @@
-# encoding=utf8
+# encoding=utf-8
 
 DICT_INFO = {
     'name': '有道词典',

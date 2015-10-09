@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-try:
-    from setuptools import setup, find_packages, Extension
-except:
-    from distutils.core import setup, find_packages, Extension
-
+from setuptools import setup, find_packages, Extension, Command
+from setuptools.command.build_py import build_py as _build
+from setuptools.command.install import install as _install
 
 setup(
     name='ydict',

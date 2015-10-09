@@ -1,10 +1,11 @@
-# encoding=utf8
+# encoding=utf-8
 # 设置界面
 
 
 from gi.repository import Gtk
 from . import log
 from . import config
+from .i18n import _
 import pkgutil
 import os
 
@@ -67,16 +68,16 @@ class PreferenceDialog (Gtk.Dialog):
         renderer = Gtk.CellRendererToggle.new()
         renderer.connect("toggled", self._cell_toggled)
         renderer.set_radio(True)
-        tree.append_column(Gtk.TreeViewColumn('Enable', renderer, active=0))
+        tree.append_column(Gtk.TreeViewColumn(_('Enable'), renderer, active=0))
         renderer = Gtk.CellRendererText.new()
-        tree.append_column(Gtk.TreeViewColumn('Dict', renderer, text=1))
-        tree.append_column(Gtk.TreeViewColumn('Description', renderer, text=2))
+        tree.append_column(Gtk.TreeViewColumn(_('Dict'), renderer, text=1))
+        tree.append_column(Gtk.TreeViewColumn(_('Description'), renderer, text=2))
         renderer = Gtk.CellRendererCombo.new()
         renderer.set_property("editable", True)
         renderer.set_property("text-column", 0)
         renderer.set_property("has-entry", False)
         renderer.connect("edited", self._on_option_changed)
-        tree.append_column(Gtk.TreeViewColumn('Options', renderer,
+        tree.append_column(Gtk.TreeViewColumn(_('Options'), renderer,
                                               model=3, text=4))
 
         store = Gtk.ListStore(bool, str, str, Gtk.TreeModel, str, str)

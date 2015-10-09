@@ -1,0 +1,33 @@
+# ydict
+# Copyright (C) 2015-2015 Wiky L
+# This file is distributed under the same license as the ydict package.
+# Wiky L<wiiiky@outlook.com> 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-09 15:33+0800\n"
+"PO-Revision-Date: 2015-10-09 15:39+0800\n"
+"Last-Translator: Wiky L <wiiiky@outlook.com>\n"
+"Language-Team: Chinese (simplified)\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: pydict/preference.py:71
+msgid "Enable"
+msgstr "启用"
+
+#: pydict/preference.py:73
+msgid "Dict"
+msgstr "词典"
+
+#: pydict/preference.py:74
+msgid "Description"
+msgstr "描述"
+
+#: pydict/preference.py:80
+msgid "Options"
+msgstr "选项"

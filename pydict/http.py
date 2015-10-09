@@ -1,4 +1,4 @@
-# encoding=utf8
+# encoding=utf-8
 # 执行查询
 
 from gi.repository import Soup

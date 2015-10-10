@@ -7,6 +7,7 @@ from pydict.about import AboutDialog
 from pydict.preference import PreferenceDialog
 from pydict.config import save_config
 from pydict.config import load_config
+from .i18n import _
 
 
 class DictWindow(Gtk.Window):
@@ -62,28 +63,28 @@ class DictWindow(Gtk.Window):
         """创建菜单"""
         bar = Gtk.MenuBar()
 
-        item = Gtk.MenuItem.new_with_mnemonic('_File')
+        item = Gtk.MenuItem.new_with_mnemonic(_('_File'))
         bar.append(item)
 
         menu = Gtk.Menu()
         item.set_submenu(menu)
 
-        item = self._menu_item_with_accel('New', '<Control>n', self._new)
+        item = self._menu_item_with_accel(_('New'), '<Control>n', self._new)
         menu.append(item)
         item = self._menu_item_with_accel(
-            'Preference', '<Control>p', self._preference)
+            _('Preference'), '<Control>p', self._preference)
         menu.append(item)
         menu.append(Gtk.SeparatorMenuItem.new())
-        item = self._menu_item_with_accel('Quit', '<Control>q', self._quit)
+        item = self._menu_item_with_accel(_('Quit'), '<Control>q', self._quit)
         menu.append(item)
 
-        item = Gtk.MenuItem.new_with_mnemonic('_Help')
+        item = Gtk.MenuItem.new_with_mnemonic(_('_Help'))
         bar.append(item)
         menu = Gtk.Menu()
         item.set_submenu(menu)
 
         item = self._menu_item_with_accel(
-            'About', '<Control><Shift>a', self._about)
+            _('About'), '<Control><Shift>a', self._about)
         menu.append(item)
 
         return bar
@@ -167,15 +168,15 @@ class DictWindow(Gtk.Window):
         if not text:
             return
         self.statusbar.remove_all(1)
-        self.statusbar.push(1, 'Searching for \'%s\'' % text)
+        self.statusbar.push(1, _('Searching for \'%s\'' % text))
         lookup(text, self._on_success, self._on_error)
 
     def _on_success(self, text, data):
         """查询成功"""
         if data.has_error():
-            self.statusbar.push(1, 'errorCode: %s' % data.errorCode)
+            self.statusbar.push(1, _('errorCode: %s' % data.errorCode))
             return
-        self.statusbar.push(1, 'A definition found')
+        self.statusbar.push(1, _('A definition found'))
         text_buffer = self.textview.get_buffer()
         text_buffer.set_text('', -1)
         text_buffer.insert_with_tags_by_name(
@@ -183,7 +184,7 @@ class DictWindow(Gtk.Window):
         text_buffer.insert_with_tags_by_name(
             text_buffer.get_end_iter(), '%s\n' % data.get_phonetic(), 'phonetic')
         text_buffer.insert_with_tags_by_name(
-            text_buffer.get_end_iter(), 'Basic:\n', 'basic_title')
+            text_buffer.get_end_iter(), _('Basic:\n'), 'basic_title')
         for basic in data.get_basic():
             text_buffer.insert_with_tags_by_name(
                 text_buffer.get_end_iter(), '\t%s\n' % basic, 'basic')
@@ -191,7 +192,7 @@ class DictWindow(Gtk.Window):
         if not extra:
             return
         text_buffer.insert_with_tags_by_name(
-            text_buffer.get_end_iter(), 'Extra:\n', 'basic_title')
+            text_buffer.get_end_iter(), _('Extra:\n'), 'basic_title')
         for ex in extra:
             text_buffer.insert_with_tags_by_name(
                 text_buffer.get_end_iter(), '\t%s: ' % ex['key'], 'extra_key')
@@ -200,4 +201,4 @@ class DictWindow(Gtk.Window):
 
     def _on_error(self, text, e):
         """查询失败"""
-        self.statusbar.push(1, 'error: %s' % str(e))
+        self.statusbar.push(1, _('error: %s' % str(e)))

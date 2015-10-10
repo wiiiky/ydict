@@ -1,21 +1,25 @@
-# ydict
-# Copyright (C) 2015-2015 Wiky L
-# This file is distributed under the same license as the ydict package.
-# Wiky L<wiiiky@outlook.com> 2015.
+# Translations template for ydict.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the ydict project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-09 15:33+0800\n"
+"Project-Id-Version: ydict 1.0.0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2015-10-10 09:53+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+#: pydict/about.py:10 pydict/window.py:87
+msgid "About"
+msgstr ""
 
 #: pydict/preference.py:71
 msgid "Enable"
@@ -32,3 +36,63 @@ msgstr ""
 #: pydict/preference.py:80
 msgid "Options"
 msgstr ""
+
+#: pydict/preference.py:111
+msgid "HTTP Proxy:"
+msgstr ""
+
+#: pydict/preference.py:134
+msgid "Source"
+msgstr ""
+
+#: pydict/preference.py:135
+msgid "Network"
+msgstr ""
+
+#: pydict/window.py:66
+msgid "_File"
+msgstr ""
+
+#: pydict/window.py:72
+msgid "New"
+msgstr ""
+
+#: pydict/window.py:75
+msgid "Preference"
+msgstr ""
+
+#: pydict/window.py:78
+msgid "Quit"
+msgstr ""
+
+#: pydict/window.py:81
+msgid "_Help"
+msgstr ""
+
+#: pydict/window.py:171
+#, python-format
+msgid "Searching for '%s'"
+msgstr ""
+
+#: pydict/window.py:177
+#, python-format
+msgid "errorCode: %s"
+msgstr ""
+
+#: pydict/window.py:179
+msgid "A definition found"
+msgstr ""
+
+#: pydict/window.py:187
+msgid "Basic:\n"
+msgstr ""
+
+#: pydict/window.py:195
+msgid "Extra:\n"
+msgstr ""
+
+#: pydict/window.py:204
+#, python-format
+msgid "error: %s"
+msgstr ""
+

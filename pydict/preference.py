@@ -108,7 +108,7 @@ class PreferenceDialog (Gtk.Dialog):
         grid.set_hexpand(True)
         box.pack_start(grid, True, True, 0)
 
-        label = Gtk.Label.new('HTTP代理:')
+        label = Gtk.Label.new(_('HTTP Proxy:'))
         grid.attach(label, 0, 0, 1, 1)
         proxy = Gtk.Entry.new()
         proxy.set_hexpand(True)
@@ -131,8 +131,8 @@ class PreferenceDialog (Gtk.Dialog):
         main.pack_start(stack, True, True, 0)
         switcher.set_stack(stack)
 
-        stack.add_titled(self._init_service_tree(), 'src', 'Source')
-        stack.add_titled(self._init_network_view(), 'net', 'Network')
+        stack.add_titled(self._init_service_tree(), 'src', _('Source'))
+        stack.add_titled(self._init_network_view(), 'net', _('Network'))
 
         content.show_all()
 

@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from setuptools import setup, find_packages, Extension, Command
-from setuptools.command.build_py import build_py as _build
-from setuptools.command.install import install as _install
+from setuptools import setup, find_packages, Extension
+from babel.messages import frontend as babel
 
 setup(
     name='ydict',
@@ -35,4 +34,8 @@ setup(
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python',
     ],
+    cmdclass={'compile_catalog': babel.compile_catalog,
+              'extract_messages': babel.extract_messages,
+              'init_catalog': babel.init_catalog,
+              'update_catalog': babel.update_catalog}
 )

@@ -18,7 +18,6 @@ YDict
 ## 扩展
 可以扩展其他接口
 
-## TODO
+## 额外
 
-*   国际化支持(i18n)
-*   Google翻译(Google翻译的接口需要付费，还是不考虑了)
+使用[Babel](http://babel.pocoo.org)来生成po下的文件。

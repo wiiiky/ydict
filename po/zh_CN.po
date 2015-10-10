@@ -5,16 +5,22 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-09 15:33+0800\n"
+"Project-Id-Version:  0.1\n"
+"Report-Msgid-Bugs-To: wiiiky@outlook.com\n"
+"POT-Creation-Date: 2015-10-10 09:53+0800\n"
 "PO-Revision-Date: 2015-10-09 15:39+0800\n"
 "Last-Translator: Wiky L <wiiiky@outlook.com>\n"
+"Language: zh_Hans_CN\n"
 "Language-Team: Chinese (simplified)\n"
-"Language: zh_CN\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+#: pydict/about.py:10 pydict/window.py:87
+msgid "About"
+msgstr ""
 
 #: pydict/preference.py:71
 msgid "Enable"
@@ -31,3 +37,63 @@ msgstr "描述"
 #: pydict/preference.py:80
 msgid "Options"
 msgstr "选项"
+
+#: pydict/preference.py:111
+msgid "HTTP Proxy:"
+msgstr "HTTP代理:"
+
+#: pydict/preference.py:134
+msgid "Source"
+msgstr "源"
+
+#: pydict/preference.py:135
+msgid "Network"
+msgstr "网络"
+
+#: pydict/window.py:66
+msgid "_File"
+msgstr "文件"
+
+#: pydict/window.py:72
+msgid "New"
+msgstr "新建"
+
+#: pydict/window.py:75
+msgid "Preference"
+msgstr "首选项"
+
+#: pydict/window.py:78
+msgid "Quit"
+msgstr "退出"
+
+#: pydict/window.py:81
+msgid "_Help"
+msgstr "帮助"
+
+#: pydict/window.py:171
+#, python-format
+msgid "Searching for '%s'"
+msgstr "正在查找 '%s'"
+
+#: pydict/window.py:177
+#, python-format
+msgid "errorCode: %s"
+msgstr "错误码: %s"
+
+#: pydict/window.py:179
+msgid "A definition found"
+msgstr "查找成功"
+
+#: pydict/window.py:187
+msgid "Basic:\n"
+msgstr "基本释义:\n"
+
+#: pydict/window.py:195
+msgid "Extra:\n"
+msgstr "额外解释:\n"
+
+#: pydict/window.py:204
+#, python-format
+msgid "error: %s"
+msgstr "错误: %s"
+
